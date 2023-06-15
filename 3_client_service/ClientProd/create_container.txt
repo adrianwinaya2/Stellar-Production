@@ -1,0 +1,2 @@
+docker create --name KantinSvc --network PetraNet -p 5500:5500 python_kfpm
+docker network connect KantinNet KantinSvc

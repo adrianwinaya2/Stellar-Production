@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Kantin Petra">
+    <meta name="author" content="Adi Wibowo">
+
+    <title>Kantin Petra - {% block title %}{% endblock %}</title>
+
+    <!-- vendor css -->
+    <link href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/jquery-switchbutton/jquery.switchButton.css') }}" rel="stylesheet">
+
+    {% block scripthead %}{% endblock %}
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bracket.css') }}">
+  </head>
+
+  <body style="background-color: {{display_attrs.bgcolor}};">
+
+    <!-- ########## START: LEFT PANEL ########## -->
+    <div class="br-logo"><a href=""><span>[</span>kantinPETRA<span>]</span></a></div>
+    <div class="br-sideleft overflow-y-auto">
+      <label class="sidebar-label pd-x-15 mg-t-20 tx-bold" style="font-size: 1.15em;text-transform: none;font-variant: small-caps;">Navigasi</label>
+      <div class="br-sideleft-menu">
+
+
+        <a href="/resto" class="br-menu-link {% if display_attrs.activemenu == 1 %}active{% endif %}">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-22"></i>
+            <span class="menu-item-label">Resto & Menu</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+        <a href="/order" class="br-menu-link {% if display_attrs.activemenu == 2 %}active{% endif %}">
+          <div class="br-menu-item">
+            <i class="menu-item-icon icon ion-ios-briefcase-outline tx-22"></i>
+            <span class="menu-item-label">Pesan</span>
+          </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
+
+      </div><!-- br-sideleft-menu -->
+
+      <br>
+    </div><!-- br-sideleft -->
+    <!-- ########## END: LEFT PANEL ########## -->
+
+    <!-- ########## START: HEAD PANEL ########## -->
+    <div class="br-header">
+      <div class="br-header-left">
+        <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href=""><i class="icon ion-navicon-round"></i></a></div>
+        <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href=""><i class="icon ion-navicon-round"></i></a></div>
+      </div><!-- br-header-left -->
+    </div><!-- br-header -->
+    <!-- ########## END: HEAD PANEL ########## -->
+
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader pd-y-15 pd-l-20"  style="background-color: {{display_attrs.bgbreadcolor}};">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <a class="breadcrumb-item" href="/">KANTIN</a>
+          <span class="breadcrumb-item active">{% block nav %}{% endblock %}</span>
+        </nav>
+      </div><!-- br-pageheader -->
+
+      <div class="pd-x-30 pd-t-30">
+        <h4 class="tx-gray-800 mg-b-5">{% block formtitle %}{% endblock %}</h4>
+      </div>
+      
+      <div class="br-pagebody">
+        <!-- start you own content here -->
+        {% block content %}{% endblock %}
+      </div><!-- br-pagebody -->
+
+      <footer class="br-footer">
+        <div class="footer-left">
+          <div class="mg-b-2">Copyright &copy; 2020. kantinpetra.com. All Rights Reserved.</div>
+        </div>
+        <div class="footer-right d-flex align-items-center">
+          <span class="tx-uppercase mg-r-10">Share:</span>
+          <a target="_blank" class="pd-x-5" href=""><i class="fa fa-facebook tx-20"></i></a>
+          <a target="_blank" class="pd-x-5" href=""><i class="fa fa-twitter tx-20"></i></a>
+        </div>
+      </footer>
+
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="{{ url_for('static', filename='lib/jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/popper.js/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/moment/moment.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/jquery-ui/jquery-ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/jquery-switchbutton/jquery.switchButton.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/peity/jquery.peity.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/bracket.js') }}"></script>
+
+    {% block scriptbody %}{% endblock %}
+  </body>
+</html>

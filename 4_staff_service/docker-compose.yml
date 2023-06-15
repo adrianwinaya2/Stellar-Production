@@ -1,0 +1,35 @@
+services:
+  KantinSQL:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./KantinSQL/:/docker-entrypoint-initdb.d
+    networks:
+      - KantinNet
+  KantinSvc:
+    build: ./KantinSvc/
+    image: kantin_svc
+    ports:
+      - 5500:5500
+    networks:
+      - PetraNet
+      - KantinNet
+    depends_on: 
+      KantinSQL:
+        condition: service_started
+  KantinCons:
+    build: ./KantinCons/
+    image: kantin_cons
+    networks:
+      - PetraNet
+      - KantinNet
+    depends_on: 
+      KantinSQL:
+        condition: service_started
+
+networks:
+  PetraNet:
+  KantinNet:

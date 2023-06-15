@@ -1,0 +1,11 @@
+docker run --name KantinSQL \
+--network KantinNet -d \
+-p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=root \ 
+-v $(pwd):/docker-entrypoint-initdb.d \
+mysql
+
+
+
+
+docker run --name KantinSQL --network KantinNet -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql

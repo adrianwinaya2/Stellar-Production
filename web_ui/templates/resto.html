@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Resto & Menu{% endblock %}
+{% block scripthead %}
+    <link href="{{ url_for('static', filename='lib/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/jt.timepicker/jquery.timepicker.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='lib/datatables/jquery.dataTables.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block scriptbody %}
+    <script src="{{ url_for('static', filename='lib/select2/js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/jt.timepicker/jquery.timepicker.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/datatables-responsive/dataTables.responsive.js') }}"></script>
+{% endblock %}
+{% block nav %}Resto & Menu{% endblock %}
+{% block formtitle %}Resto & Menu{% endblock %}
+{% block content %}
+
+    <style>table.dataTable.nowrap th, table.dataTable.nowrap td {white-space: normal}</style>
+    <div class="br-section-wrapper mg-t-20 pd-30">
+        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive nowrap">
+            <thead><tr>
+                <th class="wd-15p">Resto</th>
+                <th class="wd-15p">Gedung</th>
+                <th class="wd-25p">Menu</th>
+                <th class="wd-15p">Action</th>
+            </tr></thead>
+            <tbody>
+                {% for row in table %}
+                <tr><td>{{row.nama}}</td>
+                    <td>{{row.gedung}}</td>
+                    <td>{{row.menu|safe}}</td>
+                    <td><a href="/resto_edit/{{row.id}}">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div><!-- table-wrapper -->
+    </div>
+
+{% endblock %}
