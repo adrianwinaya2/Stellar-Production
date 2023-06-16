@@ -1,3 +1,3 @@
-docker create --name OrderCons --network PetraNet python_opm
+docker create --name OrderCons --network EONet python_opm
 docker network connect OrderNet OrderCons
 docker start OrderCons

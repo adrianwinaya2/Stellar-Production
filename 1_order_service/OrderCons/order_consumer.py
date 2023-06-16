@@ -26,14 +26,14 @@ def main():
 
     # buka koneksi ke server RabbitMQ di PetraMQ
     credentials = pika.PlainCredentials('radmin', 'rpass')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('PetraMQ',5672,'/',credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('EOMQ',5672,'/',credentials))
     channel = connection.channel()
 
     # Buat exchange dan queue
-    channel.exchange_declare(exchange='PetraEX', exchange_type='topic')
+    channel.exchange_declare(exchange='EOEX', exchange_type='topic')
     new_queue = channel.queue_declare(queue='', exclusive=True)
     new_queue_name = new_queue.method.queue
-    channel.queue_bind(exchange='PetraEX', queue=new_queue_name, routing_key='kantin.tenant.*')
+    channel.queue_bind(exchange='EOEX', queue=new_queue_name, routing_key='*.new')
 
     # Ambil message dari RabbitMQ (bila ada)
     channel.basic_qos(prefetch_count=1)
