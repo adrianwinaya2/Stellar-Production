@@ -15,10 +15,10 @@ CREATE TABLE `Client` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `Client` (`username`, `name`, `phone`) VALUES
-('budi123', 'Budi', '081'),
-('wawan456', 'Wawan', '082'),
-('agus789', 'Agus', '083');
+INSERT INTO `Client` (`username`, `name`, `email`) VALUES
+('budi123', 'Budi', 'budi@gmail.com'),
+('wawan456', 'Wawan', 'wawan@gmail.com'),
+('agus789', 'Agus', 'agus@gmail.com');
 
 COMMIT;
 

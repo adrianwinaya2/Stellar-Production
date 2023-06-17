@@ -16,11 +16,11 @@ CREATE TABLE `Staff` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `Staff` (`username`, `name`, `phone`, `position`) VALUES
-('adrian123', 'Adrian', '084', 'Leader'),
-('winaya456', 'Winaya', '085', 'Member'),
-('jefry123', 'Jefry', '086', 'Coordinator'),
-('gunawan456', 'Gunawan', '087', 'Member');
+INSERT INTO `Staff` (`username`, `name`, `email`, `position`) VALUES
+('adrian123', 'Adrian', 'adrian@gmail.com', 'Leader'),
+('winaya456', 'Winaya', 'winaya@gmail.com', 'Member'),
+('jefry123', 'Jefry', 'jefry@gmail.com', 'Coordinator'),
+('gunawan456', 'Gunawan', 'gunawan@gmail.com', 'Member');
 
 COMMIT;
 

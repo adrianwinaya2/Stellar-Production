@@ -11,17 +11,17 @@ def main():
 
         # Parse json data di dalam 'body' untuk mengambil data terkait event
         data = json.loads(body)
-        username = data[username]
-        name = data[name]
-        phone = data[phone]
+        username = data['username']
+        name = data['name']
+        email = data['email']
 
         # Tambah jumlah order sebanyak 1 untuk id kantin tertentu  
-        sql = "INSERT INTO stellar_client (username, name, phone) VALUES (%s, %s, %s);"
-        dbc.execute(sql, [username, name, phone])
+        sql = "INSERT INTO stellar_client (username, name, email) VALUES (%s, %s, %s);"
+        dbc.execute(sql, [username, name, email])
         db.commit()
 
         # tampilkan pesan bahwa event sudah diproses
-        message = 'Client ' + str(username) + ' - ' + str(name) + '-' + str(phone)
+        message = str(username) + ' - ' + str(name) + '-' + str(email)
         logging.warning("Client added : %r" % message)
 
         # acknowledge message dari RabbitMQsecara manual yang 

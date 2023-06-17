@@ -1,3 +1,3 @@
-docker create --name KantinCons --network PetraNet python_kpm
-docker network connect KantinNet KantinCons
-docker start KantinCons
+docker create --name StaffCons --network PetraNet python_kpm
+docker network connect EONet StaffCons
+docker start StaffCons
