@@ -10,7 +10,7 @@ CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   'username' varchar(20) NOT NULL
   `name` varchar(200) NOT NULL,
-  `phone` varchar(15) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `position` ENUM('Leader', 'Coordinator', 'Member') NOT NULL,
 
   PRIMARY KEY (`id`)
@@ -23,4 +23,3 @@ INSERT INTO `Staff` (`username`, `name`, `email`, `position`) VALUES
 ('gunawan456', 'Gunawan', 'gunawan@gmail.com', 'Member');
 
 COMMIT;
-

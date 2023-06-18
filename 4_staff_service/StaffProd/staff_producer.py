@@ -6,10 +6,10 @@ def publish_message(message,route):
     channel = connection.channel()
 
     # Buat exchange baru yang nantinya akan dihubungkan ke satu/lebih queue oleh consumer(s)
-    channel.exchange_declare(exchange='PetraEX', exchange_type='topic')
+    channel.exchange_declare(exchange='EOEX', exchange_type='topic')
 
     # Kirimkan message ke RabbitMQ
-    channel.basic_publish(exchange='PetraEX',
+    channel.basic_publish(exchange='EOEX',
                           routing_key=route, 
                           body=message, 
                           properties=pika.BasicProperties(delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE) )

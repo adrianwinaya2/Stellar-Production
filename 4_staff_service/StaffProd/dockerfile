@@ -8,6 +8,6 @@ RUN python -m pip install flask
 RUN python -m pip install pika
 RUN python -m pip install mysql-connector-python
 
-EXPOSE 5500/tcp
+EXPOSE 5503/tcp
 
-CMD python -m flask --app staff run --host=0.0.0.0 -p 5500
+CMD python -m flask --app staff run --host=0.0.0.0 -p 5503

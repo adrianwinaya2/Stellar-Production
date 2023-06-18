@@ -1,3 +1,3 @@
-docker create --name StaffCons --network PetraNet python_kpm
-docker network connect EONet StaffCons
+docker create --name StaffCons --network EONet staff_ppm
+docker network connect StaffNet StaffCons
 docker start StaffCons

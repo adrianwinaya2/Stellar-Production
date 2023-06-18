@@ -1,5 +1,6 @@
 {	
+	"event": "new client", 
 	"username": "rahmat123", 
 	"name": "rahmat", 
-	"phone": "088"
+	"email": "rahmat@gmail.com"
 }

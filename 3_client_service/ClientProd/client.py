@@ -26,7 +26,7 @@ app = Flask(__name__)
 #   - DELETE : remove client
 
 
-@app.route('/kantin', methods = ['GET'])
+@app.route('/client', methods = ['GET'])
 def client():
     jsondoc = ''
 
@@ -38,7 +38,7 @@ def client():
         auth = HTTPRequest.authorization
         print(auth)
 
-        # ambil data kantin
+        # ambil data client
         sql = "SELECT * FROM Client"
         dbc.execute(sql)
         clients = dbc.fetchall()
@@ -59,7 +59,7 @@ def client():
     return resp
 
 
-@app.route('/kantin/<path:id>', methods = ['GET', 'PUT', 'DELETE'])
+@app.route('/client/<path:id>', methods = ['GET', 'PUT', 'DELETE'])
 def client2(id):
 
     if not id.isnumeric():
@@ -90,28 +90,26 @@ def client2(id):
         username = data['username']
         name = data['name']
         email = data['email']
-        position = data['position']
 
         try:
-            # ubah nama kantin dan gedung di database
-            sql = "UPDATE kantin_resto SET username=%s, name=%s, email=%s, position=%s WHERE id=%s"
-            dbc.execute(sql, [username,name, email, position] )
+            # ubah data client di database
+            sql = "UPDATE Client SET username=%s, name=%s, email=%s, WHERE id=%s"
+            dbc.execute(sql, [username, name, email] )
             db.commit()
 
-            # teruskan json yang berisi perubahan data kantin yang diterima dari Web UI
-            # ke RabbitMQ disertai dengan tambahan route = 'kantin.tenant.changed'
+            # teruskan json yang berisi perubahan data client yang diterima dari Web UI
+            # ke RabbitMQ disertai dengan tambahan route = 'client.tenant.changed'
             data_update = {
                 'event': 'updated_client',
                 'username': username,
                 'name': name,
                 'email': email,
-                'position': position,
             }
             jsondoc = json.dumps(data_update)
             publish_message(jsondoc,'client.change')
 
             status_code = 200
-            messagelog = 'PUT id: ' + str(id) + ' | username: ' + username + ' | name: ' + name + ' | email: ' + email + ' | position: ' + position
+            messagelog = 'PUT id: ' + str(id) + ' | username: ' + username + ' | name: ' + name + ' | email: ' + email
             logging.warning("Received: %r" % messagelog)
 
         # bila ada kesalahan saat ubah data, buat XML dengan pesan error
