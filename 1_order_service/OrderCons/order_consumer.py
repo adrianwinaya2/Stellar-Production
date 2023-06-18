@@ -30,14 +30,16 @@ def main():
     channel = connection.channel()
 
     # Buat exchange dan queue
+    queue_name = 'order_queue'
     channel.exchange_declare(exchange='EOEX', exchange_type='topic')
-    new_queue = channel.queue_declare(queue='', exclusive=True)
-    new_queue_name = new_queue.method.queue
-    channel.queue_bind(exchange='EOEX', queue=new_queue_name, routing_key='*.new')
+    channel.queue_declare(queue=queue_name, exclusive=True)
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='*.new')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='*.change')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='*.remove')
 
     # Ambil message dari RabbitMQ (bila ada)
     channel.basic_qos(prefetch_count=1)
-    channel.basic_consume(queue=new_queue_name, on_message_callback=get_message)
+    channel.basic_consume(queue=queue_name, on_message_callback=get_message)
     channel.start_consuming()
 
 

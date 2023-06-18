@@ -1,8 +1,8 @@
 from flask import Flask, render_template, Response as HTTPResponse, request as HTTPRequest
 import mysql.connector, json, pika, logging
-from kantin_producer import *
+from event_producer import *
 
-db = mysql.connector.connect(host="KantinSQL", user="root", password="root",database="soa_db")
+db = mysql.connector.connect(host="EventSQL", user="root", password="root",database="event_service")
 dbc = db.cursor(dictionary=True)
 
 
