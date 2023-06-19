@@ -1,2 +1,2 @@
-docker create --name KantinSvc --network PetraNet -p 5500:5500 python_kfpm
-docker network connect KantinNet KantinSvc
+docker create --name AccountProd --network EONet -p 5500:5500 account_pfpm
+docker network connect AccountNet AccountProd
