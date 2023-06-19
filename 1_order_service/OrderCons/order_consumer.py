@@ -37,7 +37,7 @@ def main():
             position = data['position']
 
             sql = "INSERT INTO stellar_staff (name, position) VALUES (%s, %s);"
-            dbc.execute(sql, [name, email])
+            dbc.execute(sql, [name, position])
         
         elif route == "staff.remove" and check_db(id):
             sql = "DELETE FROM Staff WHERE id = %s"

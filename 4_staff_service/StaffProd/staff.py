@@ -25,7 +25,7 @@ app = Flask(__name__)
 #   - PUT : update staff data
 #   - DELETE : remove staff
 
-# /staff/<positioin:str> :
+# /staff/<string:position> :
 #   - GET : get all staff with desired position
 
 
