@@ -100,11 +100,11 @@ def client2(id):
             # teruskan json yang berisi perubahan data client yang diterima dari Web UI
             # ke RabbitMQ disertai dengan tambahan route = 'client.tenant.changed'
             data_update = {
-                'event': 'updated_client',
+                'event': 'update client',
                 'id': id,
-                'username': username,
+                # 'username': username,
                 'name': name,
-                'email': email,
+                # 'email': email,
             }
             jsondoc = json.dumps(data_update)
             publish_message(jsondoc,'client.change')
@@ -129,7 +129,10 @@ def client2(id):
         if client is not None:
             sql = "DELETE FROM Client WHERE id = %s"
             dbc.execute(sql, [id])
-            data_delete = {"id": id}
+            data_delete = {
+                "event": "delete client",
+                "id": id
+            }
 
             status_code = 200
             jsondoc = json.dumps(data_delete)

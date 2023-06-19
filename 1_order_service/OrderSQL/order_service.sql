@@ -9,14 +9,15 @@ USE `stellar_order`;
 CREATE TABLE `Client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `phone` varchar(15) NOT NULL,
+  `email` varchar(50) NOT NULL,
+
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `Client` (`name`, `phone`) VALUES
-('Budi', '083'),
-('Wawan', '082'),
-('Agus', '081');
+INSERT INTO `Client` (`name`, `email`) VALUES
+('Budi', 'budi@gmail.com'),
+('Wawan', 'wawan@gmail.com'),
+('Agus', 'agus@gmail.com');
 
 -- STAFF TABLE
 CREATE TABLE `Staff` (
