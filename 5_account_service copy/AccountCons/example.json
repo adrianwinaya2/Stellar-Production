@@ -1,9 +1,0 @@
-{	"event": "new order", 
-	"order_id": 34, 
-	"kantin_id": 2, 
-	"items": [
-		{"menu_id": 3, "count": 1, "price": 50000}, 
-		{"menu_id": 4, "count": 2, "price": 60000}
-	],
-	"total_price": 170000
-}

@@ -1,6 +1,6 @@
-docker run --name KantinSQL \
---network KantinNet -d \
--p 3306:3306 \
+docker run --name EventSQL \
+--network EventNet -d \
+-p 3307:3307 \
 -e MYSQL_ROOT_PASSWORD=root \ 
 -v $(pwd):/docker-entrypoint-initdb.d \
 mysql
@@ -8,4 +8,4 @@ mysql
 
 
 
-docker run --name KantinSQL --network KantinNet -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql
+docker run --name EventSQL --network EventNet -d -p 3307:3307 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql

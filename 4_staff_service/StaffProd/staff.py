@@ -107,6 +107,7 @@ def staff2(id):
             # ke RabbitMQ disertai dengan tambahan route = 'staff.tenant.changed'
             data_update = {
                 'event': 'updated_staff',
+                'id': id,
                 'username': username,
                 'name': name,
                 'email': email,
@@ -135,9 +136,11 @@ def staff2(id):
         if staff is not None:
             sql = "DELETE FROM Staff WHERE id = %s"
             dbc.execute(sql, [id])
+            data_delete = {"id": id}
 
             status_code = 200
-            jsondoc = json.dumps(staff)
+            jsondoc = json.dumps(data_delete)
+            publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
     
