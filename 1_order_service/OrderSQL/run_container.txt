@@ -6,6 +6,4 @@ docker run --name OrderSQL \
 mysql
 
 
-
-
 docker run --name OrderSQL --network OrderNet -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql
