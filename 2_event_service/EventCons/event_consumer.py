@@ -12,7 +12,7 @@ def main():
         # Parse json data di dalam 'body' untuk mengambil data terkait event
         data = json.loads(body)
         event = data['event']
-        kantin_id = data['id']
+        kantin_id = data['kantin_id']
 
         # tampilkan pesan bahwa event sudah diproses
         message = str(event) + ' - ' + str(kantin_id)
@@ -26,7 +26,7 @@ def main():
 
     # buka koneksi ke server RabbitMQ di PetraMQ
     credentials = pika.PlainCredentials('radmin', 'rpass')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('EOMQ',5672,'/',credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,'/',credentials))
     channel = connection.channel()
 
     # Buat exchange dan queue
