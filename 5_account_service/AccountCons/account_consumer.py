@@ -18,10 +18,10 @@ def main():
 
         # Tambah jumlah order sebanyak 1 untuk id kantin tertentu
         if route == '*.change':
-            sql = "UPDATE Account SET username=%s WHERE id=%s"
+            sql = "UPDATE Account SET username=%s WHERE id=%s;"
             dbc.execute(sql, [username, id] )
         elif route == '*.remove':
-            sql = "DELETE FROM Account WHERE id=%s"
+            sql = "DELETE FROM Account WHERE id=%s;"
             dbc.execute(sql, [id] )
 
         db.commit()

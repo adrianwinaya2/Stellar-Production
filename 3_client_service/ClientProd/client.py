@@ -72,7 +72,7 @@ def client2(id):
     # ------------------------------------------------------
     if HTTPRequest.method == 'GET':
             
-        sql = "SELECT * FROM Client WHERE id = %s"
+        sql = "SELECT * FROM Client WHERE id = %s;"
         dbc.execute(sql, [id])
         client = dbc.fetchone()
         
@@ -93,7 +93,7 @@ def client2(id):
 
         try:
             # ubah data client di database
-            sql = "UPDATE Client SET username=%s, name=%s, email=%s, WHERE id=%s"
+            sql = "UPDATE Client SET username=%s, name=%s, email=%s, WHERE id=%s;"
             dbc.execute(sql, [username, name, email, id] )
             db.commit()
 
@@ -122,12 +122,12 @@ def client2(id):
     # * HTTP method = DELETE
     # ------------------------------------------------------
     elif HTTPRequest.method == 'DELETE':
-        sql = "SELECT * FROM Client WHERE id = %s"
+        sql = "SELECT * FROM Client WHERE id = %s;"
         dbc.execute(sql, [id])
         client = dbc.fetchone()
 
         if client is not None:
-            sql = "DELETE FROM Client WHERE id = %s"
+            sql = "DELETE FROM Client WHERE id = %s;"
             dbc.execute(sql, [id])
             data_delete = {
                 "event": "delete client",

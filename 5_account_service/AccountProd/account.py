@@ -44,7 +44,7 @@ def account(role):
 
         try:
             # simpan nama kantin, dan gedung ke database
-            sql = "INSERT INTO kantin_resto (username, password, role) VALUES (%s, %s, %s)"
+            sql = "INSERT INTO Account (username, password, role) VALUES (%s, %s, %s);"
             dbc.execute(sql, [username, password, role] )
             db.commit()
 
@@ -92,7 +92,7 @@ def authenticate(id):
 
         try:
             # simpan nama kantin, dan gedung ke database
-            sql = "SELECT password FROM Staff WHERE username=%s"
+            sql = "SELECT password FROM Account WHERE username=%s;"
             dbc.execute(sql, [username] )
             account = dbc.fetchone()
 

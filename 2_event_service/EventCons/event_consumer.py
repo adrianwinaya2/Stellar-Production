@@ -25,28 +25,47 @@ def main():
         route = method.routing_key
         data = json.loads(body)
         event = data['event']
-        id = data['id']
 
         if route == "order.new":
             name = data['name']
             schedule = data['schedule']
-            
+
             sql = "INSERT INTO `Order` (name, schedule) VALUES (%s, %s);"
             dbc.execute(sql, [name, schedule])
+        
+        elif route == "order.change":
+            id = data['id']
+            name = data['name']
+            schedule = data['schedule']
 
+            sql = "UPDATE `Order` SET name=%s, schedule=%s WHERE id=%s;"
+            dbc.execute(sql, [name, schedule, id])
+            
         elif route == "order.remove" and check_db_order(id):
-            sql = "DELETE FROM `Order` WHERE id = %s"
+            id = data['id']
+
+            sql = "DELETE FROM `Order` WHERE id = %s;"
             dbc.execute(sql, [id])
         
-        elif route == "staff.change":
+        elif route == "staff.new":
             name = data['name']
             position = data['position']
 
             sql = "INSERT INTO Staff (name, position) VALUES (%s, %s);"
             dbc.execute(sql, [name, position])
         
+        elif route == "staff.change":
+            id = data['id']
+            name = data['name']
+            position = data['position']
+
+            sql = "UPDATE Staff SET name=%s, position=%s WHERE id=%s;"
+            dbc.execute(sql, [name, position, id])
+            
         elif route == "staff.remove" and check_db_staff(id):
-            sql = "DELETE FROM Staff WHERE id = %s"
+            id = data['id']
+
+            sql = "DELETE FROM Staff WHERE id = %s;"
             dbc.execute(sql, [id])
 
         db.commit()

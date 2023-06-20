@@ -44,7 +44,7 @@ def staff():
         print(auth)
 
         # ambil data staff
-        sql = "SELECT * FROM Staff"
+        sql = "SELECT * FROM Staff;"
         dbc.execute(sql)
         staffs = dbc.fetchall()
 
@@ -77,7 +77,7 @@ def staff2(id):
     # ------------------------------------------------------
     elif HTTPRequest.method == 'GET':
             
-        sql = "SELECT * FROM Staff WHERE id = %s"
+        sql = "SELECT * FROM Staff WHERE id = %s;"
         dbc.execute(sql, [id])
         staff = dbc.fetchone()
         
@@ -99,7 +99,7 @@ def staff2(id):
 
         try:
             # ubah nama staff dan gedung di database
-            sql = "UPDATE Staff SET username=%s, name=%s, email=%s, position=%s, WHERE id=%s"
+            sql = "UPDATE Staff SET username=%s, name=%s, email=%s, position=%s, WHERE id=%s;"
             dbc.execute(sql, [username, name, email, position, id] )
             db.commit()
 
@@ -129,12 +129,12 @@ def staff2(id):
     # * HTTP method = DELETE
     # ------------------------------------------------------
     elif HTTPRequest.method == 'DELETE':
-        sql = "SELECT * FROM Staff WHERE id = %s"
+        sql = "SELECT * FROM Staff WHERE id = %s;"
         dbc.execute(sql, [id])
         staff = dbc.fetchone()
 
         if staff is not None:
-            sql = "DELETE FROM Staff WHERE id = %s"
+            sql = "DELETE FROM Staff WHERE id = %s;"
             dbc.execute(sql, [id])
             data_delete = {"id": id}
 
@@ -166,7 +166,7 @@ def staff3(position):
         print(auth)
 
         # ambil data staff
-        sql = "SELECT * FROM Staff WHERE position = %s"
+        sql = "SELECT * FROM Staff WHERE position = %s;"
         dbc.execute(sql, [position])
         staffs = dbc.fetchall()
 

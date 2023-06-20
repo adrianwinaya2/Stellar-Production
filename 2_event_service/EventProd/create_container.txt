@@ -1,0 +1,2 @@
+docker create --name EventProd --network EONet -p 5501:5501 event_pfpm
+docker network connect EventNet EventProd

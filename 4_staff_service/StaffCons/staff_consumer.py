@@ -17,7 +17,7 @@ def main():
         position = data['position']
 
         # Tambah jumlah order sebanyak 1 untuk id kantin tertentu  
-        sql = "INSERT INTO stellar_client (username, name, email, position) VALUES (%s, %s, %s);"
+        sql = "INSERT INTO Staff (username, name, email, position) VALUES (%s, %s, %s, %s);"
         dbc.execute(sql, [username, name, email, position])
         db.commit()
 

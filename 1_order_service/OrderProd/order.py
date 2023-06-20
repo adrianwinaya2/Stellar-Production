@@ -136,7 +136,7 @@ def order2(id):
 
         try:
             # ubah nama staff dan gedung di database
-            sql = "UPDATE Staff SET pic_id=%s, name=%s, schedule=%s, status=%s WHERE id=%s"
+            sql = "UPDATE `Order` SET pic_id=%s, name=%s, schedule=%s, status=%s, WHERE id=%s;"
             dbc.execute(sql, [pic_id, name, schedule, status, id] )
             db.commit()
 
@@ -163,12 +163,12 @@ def order2(id):
     # * HTTP method = DELETE
     # ------------------------------------------------------
     elif HTTPRequest.method == 'DELETE':
-        sql = "SELECT * FROM Order WHERE id = %s"
+        sql = "SELECT * FROM Order WHERE id = %s;"
         dbc.execute(sql, [id])
         staff = dbc.fetchone()
 
         if staff is not None:
-            sql = "DELETE FROM Staff WHERE id = %s"
+            sql = "DELETE FROM Order WHERE id = %s;"
             dbc.execute(sql, [id])
             data_delete = {"id": id}
 

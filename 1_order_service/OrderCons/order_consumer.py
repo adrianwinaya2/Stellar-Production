@@ -31,8 +31,8 @@ def main():
             name = data['name']
             email = data['email']
             
-            sql = "INSERT INTO Client (username, name, email) VALUES (%s, %s);"
-            dbc.execute(sql, [name, email])
+            sql = "UPDATE Client SET name=%s, email=%s WHERE id=%s;"
+            dbc.execute(sql, [name, email, id])
 
         elif route == "client.remove" and check_db_client(id):
             sql = "DELETE FROM Client WHERE id = %s"
@@ -42,8 +42,8 @@ def main():
             name = data['name']
             position = data['position']
 
-            sql = "INSERT INTO Staff (name, position) VALUES (%s, %s);"
-            dbc.execute(sql, [name, position])
+            sql = "UPDATE Staff SET name=%s, position=%s WHERE id=%s;"
+            dbc.execute(sql, [name, position, id])
         
         elif route == "staff.remove" and check_db_staff(id):
             sql = "DELETE FROM Staff WHERE id = %s"

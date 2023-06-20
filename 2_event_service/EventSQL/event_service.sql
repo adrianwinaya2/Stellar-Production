@@ -5,7 +5,7 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `stellar_event` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `stellar_event`;
 
--- ORDER TABLE
+-- ! ORDER TABLE
 CREATE TABLE `Order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -18,7 +18,7 @@ INSERT INTO `Order` (`name`, `schedule`) VALUES
 ('Jennifer', '2023-06-11 11:00:00'),
 ('David', '2023-06-12 12:00:00');
 
--- STAFF TABLE
+-- ! STAFF TABLE
 CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -32,7 +32,7 @@ INSERT INTO `Staff` (`name`, `position`) VALUES
 ('Jefry', 'Coordinator'),
 ('Gunawan', 'Member');
 
--- EVENT TABLE
+-- ! EVENT TABLE
 CREATE TABLE `Event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
