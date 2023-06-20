@@ -8,4 +8,4 @@ mysql
 
 
 
-docker run --name AccountSQL --network AccountNet -d -p 3340:3340 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql
+docker run --name AccountSQL --network AccountNet -d -p 3310:3310 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql

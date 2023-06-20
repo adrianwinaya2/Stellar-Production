@@ -8,7 +8,7 @@ USE `stellar_account`;
 -- ! ACCOUNT TABLE
 CREATE TABLE `Account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  'username' varchar(20) NOT NULL
+  `username` varchar(20) NOT NULL,
   `password` varchar(200) NOT NULL,
   `role` ENUM('Staff', 'Client') NOT NULL,
 

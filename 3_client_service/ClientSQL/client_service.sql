@@ -8,7 +8,7 @@ USE `stellar_client`;
 -- ! CLIENT TABLE
 CREATE TABLE `Client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  'username' varchar(20) NOT NULL
+  `username` varchar(20) NOT NULL,
   `name` varchar(200) NOT NULL,
   `email` varchar(50) NOT NULL,
 
