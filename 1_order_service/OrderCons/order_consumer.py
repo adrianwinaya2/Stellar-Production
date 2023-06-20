@@ -2,16 +2,22 @@ import pika, sys, os
 import mysql.connector,logging, json
 
 
-db = mysql.connector.connect(host="OrderSQL", user="root", password="root",database="soa_db")
+db = mysql.connector.connect(host="OrderSQL", user="root", password="root",database="stellar_order")
 dbc = db.cursor(dictionary=True)
 
 
 def main():
-    def check_db(id):
+    def check_db_client(id):
         sql = "SELECT * FROM Client WHERE id = %s"
         dbc.execute(sql, [id])
         client = dbc.fetchone()
         return True if client else False
+    
+    def check_db_staff(id):
+        sql = "SELECT * FROM Staff WHERE id = %s"
+        dbc.execute(sql, [id])
+        staff = dbc.fetchone()
+        return True if staff else False
 
     def get_message(ch, method, properties, body):
 
@@ -25,10 +31,10 @@ def main():
             name = data['name']
             email = data['email']
             
-            sql = "INSERT INTO stellar_client (username, name, email) VALUES (%s, %s);"
+            sql = "INSERT INTO Client (username, name, email) VALUES (%s, %s);"
             dbc.execute(sql, [name, email])
 
-        elif route == "client.remove" and check_db(id):
+        elif route == "client.remove" and check_db_client(id):
             sql = "DELETE FROM Client WHERE id = %s"
             dbc.execute(sql, [id])
         
@@ -36,10 +42,10 @@ def main():
             name = data['name']
             position = data['position']
 
-            sql = "INSERT INTO stellar_staff (name, position) VALUES (%s, %s);"
+            sql = "INSERT INTO Staff (name, position) VALUES (%s, %s);"
             dbc.execute(sql, [name, position])
         
-        elif route == "staff.remove" and check_db(id):
+        elif route == "staff.remove" and check_db_staff(id):
             sql = "DELETE FROM Staff WHERE id = %s"
             dbc.execute(sql, [id])
 
@@ -64,7 +70,8 @@ def main():
     queue_name = 'order_queue'
     channel.exchange_declare(exchange='EOEX', exchange_type='topic')
     channel.queue_declare(queue=queue_name, exclusive=True)
-    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key=['client.*', 'staff.*'])
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='client.*')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='staff.*')
 
     # Ambil message dari RabbitMQ (bila ada)
     channel.basic_qos(prefetch_count=1)

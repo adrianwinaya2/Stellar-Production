@@ -31,22 +31,28 @@ app = Flask(__name__)
 def order():
     jsondoc = ''
 
-    if HTTPRequest.method not in app._method_route:
-        status_code = 400  # Bad Request
+    # if HTTPRequest.method not in app._method_route:
+    #     status_code = 400  # Bad Request
 
-    # ------------------------------------------------------
-    # * HTTP method = GET (GET ALL ORDERS)
-    # ------------------------------------------------------
-    elif HTTPRequest.method == 'GET':
+    # # ------------------------------------------------------
+    # # * HTTP method = GET (GET ALL ORDERS)
+    # # ------------------------------------------------------
+    # el
+    if HTTPRequest.method == 'GET':
         auth = HTTPRequest.authorization
         print(auth)
 
         # ambil data staff
-        sql = "SELECT * FROM Order"
+        sql = "SELECT * FROM `Order`"
         dbc.execute(sql)
         orders = dbc.fetchall()
 
         if orders != None:
+            # Convert datetime objects to strings
+            orders = [order for order in orders]
+            for order in orders:
+                order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+
             status_code = 200
             jsondoc = json.dumps(orders)
         else: 
@@ -64,7 +70,7 @@ def order():
         schedule = data['schedule']
         status = 'Scheduled'
 
-        sql = "INSERT INTO stellar_order (client_id, pic_id, name, category, schedule, status) VALUES (%s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO `Order` (client_id, pic_id, name, category, schedule, status) VALUES (%s, %s, %s, %s, %s, %s)"
         dbc.execute(sql, [client_id, pic_id, name, category, schedule, status])
         db.commit()
 
@@ -80,6 +86,8 @@ def order():
         jsondoc = json.dumps(new_order)
         publish_message(jsondoc,'order.new')
         status_code = 201
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
@@ -104,7 +112,7 @@ def order2(id):
     # ------------------------------------------------------
     elif HTTPRequest.method == 'GET':
             
-        sql = "SELECT * FROM Order WHERE id = %s"
+        sql = "SELECT * FROM `Order` WHERE id = %s"
         dbc.execute(sql, [id])
         order = dbc.fetchone()
         
@@ -128,7 +136,7 @@ def order2(id):
 
         try:
             # ubah nama staff dan gedung di database
-            sql = "UPDATE Staff SET pic_id=%s, name=%s, schedule=%s, status=%s, WHERE id=%s"
+            sql = "UPDATE Staff SET pic_id=%s, name=%s, schedule=%s, status=%s WHERE id=%s"
             dbc.execute(sql, [pic_id, name, schedule, status, id] )
             db.commit()
 

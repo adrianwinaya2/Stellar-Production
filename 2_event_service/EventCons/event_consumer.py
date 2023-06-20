@@ -2,20 +2,57 @@ import pika, sys, os
 import mysql.connector,logging, json
 
 
-# db = mysql.connector.connect(host="OrderSQL", user="root", password="root",database="soa_db")
-# dbc = db.cursor(dictionary=True)
+db = mysql.connector.connect(host="EventSQL", user="root", password="root",database="stellar_event")
+dbc = db.cursor(dictionary=True)
 
 
 def main():
+    def check_db_order(id):
+        sql = "SELECT * FROM Order WHERE id = %s"
+        dbc.execute(sql, [id])
+        order = dbc.fetchone()
+        return True if order else False
+    
+    def check_db_staff(id):
+        sql = "SELECT * FROM Staff WHERE id = %s"
+        dbc.execute(sql, [id])
+        staff = dbc.fetchone()
+        return True if staff else False
+    
     def get_message(ch, method, properties, body):
 
         # Parse json data di dalam 'body' untuk mengambil data terkait event
+        route = method.routing_key
         data = json.loads(body)
         event = data['event']
-        kantin_id = data['kantin_id']
+        id = data['id']
+
+        if route == "order.new":
+            name = data['name']
+            schedule = data['schedule']
+            
+            sql = "INSERT INTO `Order` (name, schedule) VALUES (%s, %s);"
+            dbc.execute(sql, [name, schedule])
+
+        elif route == "order.remove" and check_db_order(id):
+            sql = "DELETE FROM `Order` WHERE id = %s"
+            dbc.execute(sql, [id])
+        
+        elif route == "staff.change":
+            name = data['name']
+            position = data['position']
+
+            sql = "INSERT INTO Staff (name, position) VALUES (%s, %s);"
+            dbc.execute(sql, [name, position])
+        
+        elif route == "staff.remove" and check_db_staff(id):
+            sql = "DELETE FROM Staff WHERE id = %s"
+            dbc.execute(sql, [id])
+
+        db.commit()
 
         # tampilkan pesan bahwa event sudah diproses
-        message = str(event) + ' - ' + str(kantin_id)
+        message = str(event) + ' - ' + str(id)
         logging.warning("Received: %r" % message)
 
         # acknowledge message dari RabbitMQ secara manual yang 
@@ -26,7 +63,7 @@ def main():
 
     # buka koneksi ke server RabbitMQ di PetraMQ
     credentials = pika.PlainCredentials('radmin', 'rpass')
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,'/',credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters('EOMQ',5672,'/',credentials))
     channel = connection.channel()
 
     # Buat exchange dan queue

@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response as HTTPResponse, request as H
 import mysql.connector, json, pika, logging
 from event_producer import *
 
-db = mysql.connector.connect(host="EventSQL", user="root", password="root",database="event_service")
+db = mysql.connector.connect(host="EventSQL", user="root", password="root",database="stellar_service")
 dbc = db.cursor(dictionary=True)
 
 
