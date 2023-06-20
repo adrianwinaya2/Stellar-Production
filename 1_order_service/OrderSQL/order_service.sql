@@ -5,7 +5,7 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `stellar_order` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `stellar_order`;
 
--- CLIENT TABLE
+-- ! CLIENT TABLE
 CREATE TABLE `Client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -19,7 +19,7 @@ INSERT INTO `Client` (`name`, `email`) VALUES
 ('Wawan', 'wawan@gmail.com'),
 ('Agus', 'agus@gmail.com');
 
--- STAFF TABLE
+-- ! STAFF TABLE
 CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -33,7 +33,7 @@ INSERT INTO `Staff` (`name`, `position`) VALUES
 ('Jefry', 'Coordinator'),
 ('Gunawan', 'Member');
 
--- ORDER TABLE
+-- ! ORDER TABLE
 CREATE TABLE `Order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,

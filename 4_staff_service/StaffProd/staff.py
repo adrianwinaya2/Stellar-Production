@@ -100,7 +100,7 @@ def staff2(id):
         try:
             # ubah nama staff dan gedung di database
             sql = "UPDATE Staff SET username=%s, name=%s, email=%s, position=%s, WHERE id=%s"
-            dbc.execute(sql, [username, name, email, position] )
+            dbc.execute(sql, [username, name, email, position, id] )
             db.commit()
 
             # teruskan json yang berisi perubahan data staff yang diterima dari Web UI
@@ -143,10 +143,6 @@ def staff2(id):
             publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
-    
-    else:
-        status_code = 400  # Bad Request
-
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff

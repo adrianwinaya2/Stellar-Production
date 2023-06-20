@@ -1,0 +1,2 @@
+docker create --name ClientProd --network EONet -p 5502:5502 client_pfpm
+docker network connect ClientNet ClientProd
