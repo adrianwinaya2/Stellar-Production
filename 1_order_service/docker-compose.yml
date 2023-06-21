@@ -11,25 +11,25 @@ services:
       - OrderNet
   OrderProd:
     build: ./OrderProd/
-    image: kantin_svc
+    image: order_pfpm
     ports:
       - 5500:5500
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - OrderNet
     depends_on: 
-      KantinSQL:
+      OrderSQL:
         condition: service_started
-  KantinCons:
-    build: ./KantinCons/
-    image: kantin_cons
+  OrderCons:
+    build: ./OrderCons/
+    image: order_ppm
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - OrderNet
     depends_on: 
-      KantinSQL:
+      OrderSQL:
         condition: service_started
 
 networks:
-  PetraNet:
-  KantinNet:
+  EONet:
+  OrderNet:

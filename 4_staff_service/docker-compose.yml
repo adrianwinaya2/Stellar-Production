@@ -1,35 +1,35 @@
 services:
-  KantinSQL:
+  StaffSQL:
     image: mysql
     ports:
-      - 3306:3306
+      - 3307:3307
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./KantinSQL/:/docker-entrypoint-initdb.d
+      - ./StaffSQL/:/docker-entrypoint-initdb.d
     networks:
-      - KantinNet
-  KantinSvc:
-    build: ./KantinSvc/
-    image: kantin_svc
+      - StaffNet
+  StaffProd:
+    build: ./StaffProd/
+    image: staff_pfpm
     ports:
-      - 5500:5500
+      - 5501:5501
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - StaffNet
     depends_on: 
-      KantinSQL:
+      StaffSQL:
         condition: service_started
-  KantinCons:
-    build: ./KantinCons/
-    image: kantin_cons
+  StaffCons:
+    build: ./StaffCons/
+    image: staff_ppm
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - StaffNet
     depends_on: 
-      KantinSQL:
+      StaffSQL:
         condition: service_started
 
 networks:
-  PetraNet:
-  KantinNet:
+  EONet:
+  StaffNet:
