@@ -1,10 +1,7 @@
 {	
-	"event": "new order", 
-	"order_id": 34, 
-	"kantin_id": 2, 
-	"items": [
-		{"menu_id": 3, "count": 1, "price": 50000}, 
-		{"menu_id": 4, "count": 2, "price": 60000}
-	],
-	"total_price": 170000
+	"name": "example event", 
+	"order_id": 1, 
+	"pic_id": 2, 
+	"time_start": "10:00:00",
+    "time_end": "11:00:00"
 }

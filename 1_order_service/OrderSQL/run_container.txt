@@ -1,9 +1,10 @@
-docker run --name OrderSQL \
---network OrderNet -d \
--p 3306:3306 \
--e MYSQL_ROOT_PASSWORD=root \ 
--v $(pwd):/docker-entrypoint-initdb.d \
+docker run --name OrderSQL /
+--network OrderNet -d /
+-p 3306:3306 /
+-e MYSQL_ROOT_PASSWORD=root / 
+-v $(pwd):/docker-entrypoint-initdb.d /
 mysql
 
 
 docker run --name OrderSQL --network OrderNet -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v $(pwd):/docker-entrypoint-initdb.d mysql
+docker run --name OrderSQL --network OrderNet -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /mnt/c/file_sql/stellarsql/order_service.sql:/docker-entrypoint-initdb.d mysql

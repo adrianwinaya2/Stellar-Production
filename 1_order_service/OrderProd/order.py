@@ -75,6 +75,7 @@ def order():
         db.commit()
 
         new_order = {
+            'event': 'new order',
             'client_id': client_id,
             'pic_id': pic_id,
             'name': name,
@@ -141,7 +142,7 @@ def order2(id):
             db.commit()
 
             updated_order = {
-                'event': 'updated_order',
+                'event': 'updated order',
                 'id': id,
                 'name': name,
                 'schedule': schedule,
