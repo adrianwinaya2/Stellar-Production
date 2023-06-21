@@ -1,2 +1,3 @@
 docker create --name AccountProd --network EONet -p 5504:5504 account_pfpm
 docker network connect AccountNet AccountProd
+docker start AccountProd

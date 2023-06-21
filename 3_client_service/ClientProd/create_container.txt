@@ -1,2 +1,3 @@
-docker create --name OrderProd --network EONet -p 5502:5502 order_pfpm
-docker network connect OrderNet OrderProd
+docker create --name ClientProd --network EONet -p 5502:5502 client_pfpm
+docker network connect ClientNet ClientProd
+docker start ClientProd

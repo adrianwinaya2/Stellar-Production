@@ -1,2 +1,3 @@
 docker create --name StaffProd --network EONet -p 5503:5503 staff_pfpm
 docker network connect StaffNet StaffProd
+docker start StaffProd

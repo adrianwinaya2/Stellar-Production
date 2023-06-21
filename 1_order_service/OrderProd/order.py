@@ -171,7 +171,10 @@ def order2(id):
         if staff is not None:
             sql = "DELETE FROM Order WHERE id = %s;"
             dbc.execute(sql, [id])
-            data_delete = {"id": id}
+            data_delete = {
+                "event": "delete order",
+                "id": id
+            }
 
             status_code = 200
             jsondoc = json.dumps(data_delete)

@@ -102,9 +102,9 @@ def client2(id):
             data_update = {
                 'event': 'update client',
                 'id': id,
-                # 'username': username,
+                'username': username,
                 'name': name,
-                # 'email': email,
+                'email': email,
             }
             jsondoc = json.dumps(data_update)
             publish_message(jsondoc,'client.change')

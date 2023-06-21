@@ -28,13 +28,10 @@ app = Flask(__name__)
 def account(role):
     jsondoc = ''
 
-    if HTTPRequest.method not in app._method_route:
-        status_code = 400  # Bad Request
-
     # ------------------------------------------------------
     # HTTP method = POST
     # ------------------------------------------------------
-    elif HTTPRequest.method == 'POST':
+    if HTTPRequest.method == 'POST':
         data = json.loads(HTTPRequest.data)
         event = data['event']
         name = data['name']
@@ -64,6 +61,9 @@ def account(role):
         except mysql.connector.Error as err:
             status_code = 409
 
+    else:
+        status_code = 400  # Bad Request
+
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke client
@@ -79,12 +79,10 @@ def account(role):
 def authenticate(id):
     jsondoc = ''
 
-    if not id.isnumeric() or HTTPRequest.method not in app._method_route:
-        status_code = 400  # Bad Request
     # ------------------------------------------------------
     # HTTP method = POST
     # ------------------------------------------------------
-    elif HTTPRequest.method == 'POST':
+    if HTTPRequest.method == 'POST':
         data = json.loads(HTTPRequest.data)
         event = data['event']
         username = data['username']
@@ -106,6 +104,9 @@ def authenticate(id):
             
         except mysql.connector.Error as err:
             status_code = 409
+    
+    else:
+        status_code = 400 # Bad Request
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke client
