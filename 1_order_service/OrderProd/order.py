@@ -105,19 +105,22 @@ def order2(id):
 
     jsondoc = ''
 
-    if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    if not str(id).isnumeric():
         status_code = 400  # Bad Request
 
     # ------------------------------------------------------
     # * HTTP method = GET
     # ------------------------------------------------------
     elif HTTPRequest.method == 'GET':
-            
+        
         sql = "SELECT * FROM `Order` WHERE id = %s"
         dbc.execute(sql, [id])
         order = dbc.fetchone()
         
         if order != None:
+            # Convert datetime objects to strings
+            order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+
             status_code = 200
             jsondoc = json.dumps(order)
         else: 
@@ -181,6 +184,8 @@ def order2(id):
             publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff

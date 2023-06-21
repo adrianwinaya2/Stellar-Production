@@ -48,6 +48,8 @@ def client():
             jsondoc = json.dumps(clients)
         else: 
             status_code = 404 
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke client
@@ -62,7 +64,7 @@ def client():
 @app.route('/client/<path:id>', methods = ['GET', 'PUT', 'DELETE'])
 def client2(id):
 
-    if not id.isnumeric():
+    if not str(id).isnumeric():
         status_code = 400  # Bad Request
     
     jsondoc = ''
@@ -139,6 +141,8 @@ def client2(id):
             publish_message(jsondoc,'client.remove')
         else: 
             status_code = 404
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke client

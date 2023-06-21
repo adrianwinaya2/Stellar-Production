@@ -1,16 +1,16 @@
 services:
-  ClientSQL:
+  OrderSQL:
     image: mysql
     ports:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./KantinSQL/:/docker-entrypoint-initdb.d
+      - ./OrderSQL/:/docker-entrypoint-initdb.d
     networks:
-      - KantinNet
-  KantinSvc:
-    build: ./KantinSvc/
+      - OrderNet
+  OrderProd:
+    build: ./OrderProd/
     image: kantin_svc
     ports:
       - 5500:5500

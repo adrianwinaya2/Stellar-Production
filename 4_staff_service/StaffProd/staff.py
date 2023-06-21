@@ -33,13 +33,14 @@ app = Flask(__name__)
 def staff():
     jsondoc = ''
 
-    if HTTPRequest.method not in app._method_route:
-        status_code = 400  # Bad Request
+    # if HTTPRequest.method not in app._method_route:
+    #     status_code = 400  # Bad Request
 
-    # ------------------------------------------------------
-    # * HTTP method = GET
-    # ------------------------------------------------------
-    elif HTTPRequest.method == 'GET':
+    # # ------------------------------------------------------
+    # # * HTTP method = GET
+    # # ------------------------------------------------------
+    # el
+    if HTTPRequest.method == 'GET':
         auth = HTTPRequest.authorization
         print(auth)
 
@@ -53,6 +54,8 @@ def staff():
             jsondoc = json.dumps(staffs)
         else: 
             status_code = 404 
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
@@ -68,8 +71,8 @@ def staff():
 def staff2(id):
 
     jsondoc = ''
-
-    if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    # if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    if not id.isnumeric():
         status_code = 400  # Bad Request
 
     # ------------------------------------------------------
@@ -146,6 +149,8 @@ def staff2(id):
             publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
@@ -178,6 +183,8 @@ def staff3(position):
             jsondoc = json.dumps(staffs)
         else: 
             status_code = 404
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff

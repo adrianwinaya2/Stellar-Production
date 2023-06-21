@@ -31,13 +31,14 @@ app = Flask(__name__)
 def event():
     jsondoc = ''
 
-    if HTTPRequest.method not in list(HTTPRequest.route.methods):
-        status_code = 400  # Bad Request
+    # if HTTPRequest.method not in list(HTTPRequest.route.methods):
+    #     status_code = 400  # Bad Request
 
-    # ------------------------------------------------------
-    # * HTTP method = GET (GET ALL ORDERS)
-    # ------------------------------------------------------
-    elif HTTPRequest.method == 'GET':
+    # # ------------------------------------------------------
+    # # * HTTP method = GET (GET ALL ORDERS)
+    # # ------------------------------------------------------
+    # el
+    if HTTPRequest.method == 'GET':
         auth = HTTPRequest.authorization
         print(auth)
 
@@ -47,6 +48,10 @@ def event():
         events = dbc.fetchall()
 
         if events != None:
+            events = [event for event in events]
+            for event in events:
+                event['time_start'] = str(event['time_start']) 
+                event['time_end'] =str(event['time_end']) 
             status_code = 200
             jsondoc = json.dumps(events)
         else: 
@@ -79,6 +84,8 @@ def event():
         jsondoc = json.dumps(new_event)
         publish_message(jsondoc,'event.new')
         status_code = 201
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
@@ -95,7 +102,8 @@ def event2(id):
 
     jsondoc = ''
 
-    if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    # if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    if not str(id).isnumeric():
         status_code = 400  # Bad Request
 
     # ------------------------------------------------------
@@ -108,6 +116,10 @@ def event2(id):
         event = dbc.fetchone()
         
         if event != None:
+            # Convert datetime objects to strings
+            event['time_start'] = str(event['time_start']) 
+            event['time_end'] = str(event['time_end']) 
+
             status_code = 200
             jsondoc = json.dumps(event)
         else: 
@@ -171,6 +183,8 @@ def event2(id):
             publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
