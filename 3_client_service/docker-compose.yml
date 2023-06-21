@@ -2,34 +2,34 @@ services:
   ClientSQL:
     image: mysql
     ports:
-      - 3306:3306
+      - 3308:3308
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./KantinSQL/:/docker-entrypoint-initdb.d
+      - ./ClientSQL/:/docker-entrypoint-initdb.d
     networks:
-      - KantinNet
-  KantinSvc:
-    build: ./KantinSvc/
-    image: kantin_svc
+      - ClientNet
+  ClientProd:
+    build: ./ClientProd/
+    image: client_pfpm
     ports:
-      - 5500:5500
+      - 5501:5501
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - ClientNet
     depends_on: 
-      KantinSQL:
+      ClientSQL:
         condition: service_started
-  KantinCons:
-    build: ./KantinCons/
-    image: kantin_cons
+  ClientCons:
+    build: ./ClientCons/
+    image: client_ppm
     networks:
-      - PetraNet
-      - KantinNet
+      - EONet
+      - ClientNet
     depends_on: 
-      KantinSQL:
+      ClientSQL:
         condition: service_started
 
 networks:
-  PetraNet:
-  KantinNet:
+  EONet:
+  ClientNet:

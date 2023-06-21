@@ -1,35 +1,35 @@
 services:
-  AccountSQL:
+  EventSQL:
     image: mysql
     ports:
       - 3307:3307
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./AccountSQL/:/docker-entrypoint-initdb.d
+      - ./EventSQL/:/docker-entrypoint-initdb.d
     networks:
-      - AccountNet
-  AccountProd:
-    build: ./AccountProd/
-    image: account_pfpm
+      - EventNet
+  EventProd:
+    build: ./EventProd/
+    image: event_pfpm
     ports:
       - 5501:5501
     networks:
       - EONet
-      - AccountNet
+      - EventNet
     depends_on: 
-      AccountSQL:
+      EventSQL:
         condition: service_started
-  AccountCons:
-    build: ./AccountCons/
-    image: account_ppm
+  EventCons:
+    build: ./EventCons/
+    image: event_ppm
     networks:
       - EONet
-      - AccountNet
+      - EventNet
     depends_on: 
-      AccountSQL:
+      EventSQL:
         condition: service_started
 
 networks:
   EONet:
-  AccountNet:
+  EventNet:
