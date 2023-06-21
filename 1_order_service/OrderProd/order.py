@@ -42,15 +42,39 @@ def order():
         auth = HTTPRequest.authorization
         print(auth)
 
-        # ambil data staff
+        # ambil data order
         sql = "SELECT * FROM `Order`"
         dbc.execute(sql)
         orders = dbc.fetchall()
 
+        # ambil data client
+        sql = "SELECT * FROM Client"
+        dbc.execute(sql)
+        clients = dbc.fetchall()
+
+        # ambil data pic
+        sql = "SELECT * FROM Staff"
+        dbc.execute(sql)
+        staffs = dbc.fetchall()
+
         if orders != None:
-            # Convert datetime objects to strings
             orders = [order for order in orders]
             for order in orders:
+                # Change Client ID to Client Name
+                if clients != None:
+                    for client in clients:
+                        if order['client_id'] == client['id']:
+                            order['client_id'] = client['name']
+                            break
+
+                # Change PIC ID to PIC Name
+                if staffs != None:
+                    for staff in staffs:
+                        if order['pic_id'] == staff['id']:
+                            order['pic_id'] = staff['name']
+                            break
+
+                # Convert datetime objects to strings
                 order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
 
             status_code = 200

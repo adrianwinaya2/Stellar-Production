@@ -19,23 +19,27 @@ def index():
 #====================================================================================
 # SHOW ALL RESTOs AND MENUs
 #====================================================================================
-@app.route('/resto/', methods=['GET', 'POST'])
+@app.route('/order/', methods=['GET', 'POST'])
 def resto():
 
-    with urllib.request.urlopen("http://localhost:5500/kantin") as url:
+    with urllib.request.urlopen("http://localhost:5500/order") as url:
         data = json.load(url)
         table = []
         for row in data:
             id = row["id"]
-            nama = row["nama"]
-            gedung = row["gedung"]
-            menu = ""
-            for menu_item in row["produk"]:
-                menu = menu + '- ' + menu_item["menu"] + '(' + str(menu_item["price"]) +')<br/>'
-            table.append( {"id": id, "nama":nama, "gedung":gedung, "menu":menu} )
+            client_name = row["client_id"]
+            pic_name = row["pic_id"]
+            name = row["name"]
+            datetime = row["schedule"]
+            status = row["status"]
+
+
+
+            table.append( {"id": id, "client_name":client_name, "pic_name":pic_name, "name":name, "schedule":datetime, 
+                           "status":status} )
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('resto.html', display_attrs=display_attrs, table=table)
+    return render_template('order.html', display_attrs=display_attrs, table=table)
 
 
 
@@ -80,4 +84,9 @@ def resto_edit(id):
         return render_template('resto_edit.html', display_attrs=display_attrs, formdata=formdata)
 
 
+if __name__ == "__main__":
+    # Mac OS kadang nabrak port 5000 maka pakai port 8000
+    app.run(host="0.0.0.0", port=8000)
 
+    # Untuk Windows
+    # app.run()

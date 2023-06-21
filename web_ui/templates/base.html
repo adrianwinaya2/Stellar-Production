@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Meta -->
-    <meta name="description" content="Kantin Petra">
-    <meta name="author" content="Adi Wibowo">
+    <meta name="description" content="Stellar EO">
+    <meta name="author" content="Adrian Winaya & Jefry Gunawan">
 
-    <title>Kantin Petra - {% block title %}{% endblock %}</title>
+    <title>Stellar - {% block title %}{% endblock %}</title>
 
     <!-- vendor css -->
     <link href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -26,16 +26,16 @@
   <body style="background-color: {{display_attrs.bgcolor}};">
 
     <!-- ########## START: LEFT PANEL ########## -->
-    <div class="br-logo"><a href=""><span>[</span>kantinPETRA<span>]</span></a></div>
+    <div class="br-logo"><a href=""><span>[</span>Stellar EO<span>]</span></a></div>
     <div class="br-sideleft overflow-y-auto">
       <label class="sidebar-label pd-x-15 mg-t-20 tx-bold" style="font-size: 1.15em;text-transform: none;font-variant: small-caps;">Navigasi</label>
       <div class="br-sideleft-menu">
 
 
-        <a href="/resto" class="br-menu-link {% if display_attrs.activemenu == 1 %}active{% endif %}">
+        <a href="/order" class="br-menu-link {% if display_attrs.activemenu == 1 %}active{% endif %}">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-22"></i>
-            <span class="menu-item-label">Resto & Menu</span>
+            <span class="menu-item-label">Order</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
         <a href="/order" class="br-menu-link {% if display_attrs.activemenu == 2 %}active{% endif %}">
