@@ -37,7 +37,7 @@ INSERT INTO `Staff` (`name`, `position`) VALUES
 CREATE TABLE `Order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) NOT NULL,
-  `pic_id` int(11) NOT NULL,
+  `pic_id` int(11),
   `name` varchar(200) NOT NULL,
   `category` ENUM('Sweet 17', 'Wedding', 'Birthday') NOT NULL,
   `schedule` DATETIME NOT NULL,

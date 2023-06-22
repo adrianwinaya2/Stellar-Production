@@ -37,48 +37,30 @@ def order():
     # # ------------------------------------------------------
     # # * HTTP method = GET (GET ALL ORDERS)
     # # ------------------------------------------------------
-    # el
     if HTTPRequest.method == 'GET':
         auth = HTTPRequest.authorization
         print(auth)
 
         # ambil data order
-        sql = "SELECT * FROM `Order`"
+        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o WHERE id=%s INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id"
         dbc.execute(sql)
         orders = dbc.fetchall()
 
-        # ambil data client
-        sql = "SELECT * FROM Client"
-        dbc.execute(sql)
-        clients = dbc.fetchall()
-
-        # ambil data pic
-        sql = "SELECT * FROM Staff"
-        dbc.execute(sql)
-        staffs = dbc.fetchall()
+        column_names = [desc[0] for desc in dbc.description]
 
         if orders != None:
-            orders = [order for order in orders]
-            for order in orders:
-                # Change Client ID to Client Name
-                if clients != None:
-                    for client in clients:
-                        if order['client_id'] == client['id']:
-                            order['client_id'] = client['name']
-                            break
 
-                # Change PIC ID to PIC Name
-                if staffs != None:
-                    for staff in staffs:
-                        if order['pic_id'] == staff['id']:
-                            order['pic_id'] = staff['name']
-                            break
+            json_list = []
+            for row in orders:
+                row_dict = dict(zip(column_names, row))
+                row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+                json_string = json.dumps(row_dict)
 
-                # Convert datetime objects to strings
-                order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+                json_list.append(json_string)
 
             status_code = 200
-            jsondoc = json.dumps(orders)
+            jsondoc = json.dumps(json_list)
+
         else: 
             status_code = 404 
             
@@ -136,17 +118,26 @@ def order2(id):
     # * HTTP method = GET
     # ------------------------------------------------------
     elif HTTPRequest.method == 'GET':
-        
-        sql = "SELECT * FROM `Order` WHERE id = %s"
+        auth = HTTPRequest.authorization
+        print(auth)
+
+        # ambil data order
+        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o WHERE id=%s INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id"
         dbc.execute(sql, [id])
         order = dbc.fetchone()
-        
+
+        column_names = [desc[0] for desc in dbc.description]
+        # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
+
         if order != None:
-            # Convert datetime objects to strings
-            order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+
+            row_dict = dict(zip(column_names, order))
+            row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            json_string = json.dumps(row_dict)
 
             status_code = 200
-            jsondoc = json.dumps(order)
+            jsondoc = json.dumps(json_string)
+
         else: 
             status_code = 404 
 
@@ -208,6 +199,7 @@ def order2(id):
             publish_message(jsondoc,'staff.remove')
         else: 
             status_code = 404
+
     else:
         status_code = 400
 
@@ -219,8 +211,3 @@ def order2(id):
     resp.headers['Content-Type'] = 'application/json'
     resp.status = status_code
     return resp
-
-
-
-
-

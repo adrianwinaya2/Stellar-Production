@@ -29,31 +29,36 @@ app = Flask(__name__)
 
 @app.route('/event', methods = ['GET', 'POST'])
 def event():
-    jsondoc = ''
 
-    # if HTTPRequest.method not in list(HTTPRequest.route.methods):
-    #     status_code = 400  # Bad Request
+    jsondoc = ''
 
     # # ------------------------------------------------------
     # # * HTTP method = GET (GET ALL ORDERS)
     # # ------------------------------------------------------
-    # el
     if HTTPRequest.method == 'GET':
         auth = HTTPRequest.authorization
         print(auth)
 
-        # ambil data staff
-        sql = "SELECT * FROM Event ORDER BY time_start ASC;"
+        # ambil data order
+        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e WHERE id=%s INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
         dbc.execute(sql)
         events = dbc.fetchall()
 
+        column_names = [desc[0] for desc in dbc.description]
+
         if events != None:
-            events = [event for event in events]
-            for event in events:
-                event['time_start'] = str(event['time_start']) 
-                event['time_end'] =str(event['time_end']) 
+
+            json_list = []
+            for row in events:
+                row_dict = dict(zip(column_names, row))
+                row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+                json_string = json.dumps(row_dict)
+
+                json_list.append(json_string)
+
             status_code = 200
-            jsondoc = json.dumps(events)
+            jsondoc = json.dumps(json_list)
+
         else: 
             status_code = 404 
             
@@ -102,7 +107,6 @@ def event2(id):
 
     jsondoc = ''
 
-    # if not id.isnumeric() or HTTPRequest.method not in app._method_route:
     if not str(id).isnumeric():
         status_code = 400  # Bad Request
 
@@ -110,18 +114,26 @@ def event2(id):
     # * HTTP method = GET
     # ------------------------------------------------------
     elif HTTPRequest.method == 'GET':
-            
-        sql = "SELECT * FROM Event WHERE id = %s;"
+        auth = HTTPRequest.authorization
+        print(auth)
+
+        # ambil data order
+        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e WHERE id=%s INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
         dbc.execute(sql, [id])
         event = dbc.fetchone()
-        
+
+        column_names = [desc[0] for desc in dbc.description]
+        # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
+
         if event != None:
-            # Convert datetime objects to strings
-            event['time_start'] = str(event['time_start']) 
-            event['time_end'] = str(event['time_end']) 
+
+            row_dict = dict(zip(column_names, event))
+            row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            json_string = json.dumps(row_dict)
 
             status_code = 200
-            jsondoc = json.dumps(event)
+            jsondoc = json.dumps(json_string)
+
         else: 
             status_code = 404 
 

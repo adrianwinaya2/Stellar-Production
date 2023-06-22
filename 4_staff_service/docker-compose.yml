@@ -2,7 +2,7 @@ services:
   StaffSQL:
     image: mysql
     ports:
-      - 3307:3307
+      - 3309:3309
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
@@ -13,7 +13,7 @@ services:
     build: ./StaffProd/
     image: staff_pfpm
     ports:
-      - 5501:5501
+      - 5503:5503
     networks:
       - EONet
       - StaffNet

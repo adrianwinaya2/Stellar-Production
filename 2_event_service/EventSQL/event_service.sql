@@ -36,7 +36,7 @@ INSERT INTO `Staff` (`name`, `position`) VALUES
 CREATE TABLE `Event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `pic_id` int(11) NOT NULL,
+  `pic_id` int(11),
   `name` varchar(200) NOT NULL,
   `time_start` TIME NOT NULL,
   `time_end` TIME NOT NULL,

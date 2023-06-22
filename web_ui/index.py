@@ -24,22 +24,9 @@ def resto():
 
     with urllib.request.urlopen("http://localhost:5500/order") as url:
         data = json.load(url)
-        table = []
-        for row in data:
-            id = row["id"]
-            client_name = row["client_id"]
-            pic_name = row["pic_id"]
-            name = row["name"]
-            datetime = row["schedule"]
-            status = row["status"]
-
-
-
-            table.append( {"id": id, "client_name":client_name, "pic_name":pic_name, "name":name, "schedule":datetime, 
-                           "status":status} )
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('order.html', display_attrs=display_attrs, table=table)
+    return render_template('order.html', display_attrs=display_attrs, table=data)
 
 
 

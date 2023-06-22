@@ -2,7 +2,7 @@ services:
   AccountSQL:
     image: mysql
     ports:
-      - 3307:3307
+      - 3310:3310
     environment:
       - MYSQL_ROOT_PASSWORD=root
     volumes:
@@ -13,7 +13,7 @@ services:
     build: ./AccountProd/
     image: account_pfpm
     ports:
-      - 5501:5501
+      - 5504:5504
     networks:
       - EONet
       - AccountNet
