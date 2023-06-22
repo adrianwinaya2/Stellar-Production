@@ -20,7 +20,7 @@ def index():
 # SHOW ALL RESTOs AND MENUs
 #====================================================================================
 @app.route('/order/', methods=['GET', 'POST'])
-def resto():
+def order():
 
     with urllib.request.urlopen("http://localhost:5500/order") as url:
         data = json.load(url)
@@ -30,7 +30,7 @@ def resto():
 
 
 @app.route('/event/', methods=['GET', 'POST'])
-def resto():
+def event():
 
     with urllib.request.urlopen("http://localhost:5501/event") as url:
         data = json.load(url)
@@ -40,7 +40,7 @@ def resto():
 
 
 @app.route('/client/', methods=['GET', 'POST'])
-def resto():
+def client():
 
     with urllib.request.urlopen("http://localhost:5502/client") as url:
         data = json.load(url)
@@ -50,7 +50,7 @@ def resto():
 
 
 @app.route('/staff/', methods=['GET', 'POST'])
-def resto():
+def staff():
 
     with urllib.request.urlopen("http://localhost:5503/staff") as url:
         data = json.load(url)
@@ -59,14 +59,15 @@ def resto():
     return render_template('staff.html', display_attrs=display_attrs, table=data)
 
 
-@app.route('/account/', methods=['GET', 'POST'])
-def resto():
+# Tidak ada method GET nya
+# @app.route('/account/', methods=['GET', 'POST'])
+# def account():
 
-    with urllib.request.urlopen("http://localhost:5504/account") as url:
-        data = json.load(url)
+#     with urllib.request.urlopen("http://localhost:5504/account") as url:
+#         data = json.load(url)
 
-    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('account.html', display_attrs=display_attrs, table=data)
+#     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+#     return render_template('account.html', display_attrs=display_attrs, table=data)
 
 
 #====================================================================================
@@ -82,12 +83,12 @@ def resto_edit(id):
         data = {}
         data["id"] = str(id)
         for i in postdata:
-            if(i[0] == "nama"):   data["nama"] = i[1][0]
-            if(i[0] == "gedung"): data["gedung"] = i[1][0]
+            if(i[0] == "namr"):   data["name"] = i[1][0]
+            if(i[0] == "status"): data["status"] = i[1][0]
         jsondoc = json.dumps(data)
         print(jsondoc)
 
-        url     = "http://localhost:5500/kantin/" + str(id)
+        url     = "http://localhost:5500/order/" + str(id)
         headers = {'Content-Type': 'application/json'}
         requests.put(url, data=jsondoc, headers=headers)
         urllib.request.urlopen(url)
@@ -98,13 +99,13 @@ def resto_edit(id):
     # kalau tidak ada data POST dari perubahan data di form, 
     # tampilkan form berisi data yang siap diubah
     else:
-        data_url = "http://localhost:5500/kantin/" + str(id)
+        data_url = "http://localhost:5500/order/" + str(id)
         with urllib.request.urlopen(data_url) as url:
             data = json.load(url)
             formdata={}
             formdata["id"] = str(id)
-            formdata["nama"] = data["nama"]
-            formdata["gedung"] = data["gedung"]
+            formdata["name"] = data["name"]
+            formdata["status"] = data["status"]
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
         return render_template('resto_edit.html', display_attrs=display_attrs, formdata=formdata)

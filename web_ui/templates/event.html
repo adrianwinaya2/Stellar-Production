@@ -24,21 +24,19 @@
             <table id="datatable1" class="table display responsive nowrap">
             <thead><tr>
                 <th class="wd-15p">Name</th>
-                <th class="wd-8p">Client</th>
+                <th class="wd-8p">Order</th>
                 <th class="wd-8p">PIC</th>
-                <th class="wd-15p">Category</th>
-                <th class="wd-15p">Schedule</th>
-                <th class="wd-15p">Status</th>
-                <th class="wd-15p">Action</th>
+                <th class="wd-15p">Start</th>
+                <th class="wd-15p">End</th>
+                <th class="wd-8p">Action</th>
             </tr></thead>
             <tbody>
                 {% for row in table %}
                 <tr><td>{{row.name}}</td>
-                    <td>{{row.client_name}}</td>
+                    <td>{{row.order_name}}</td>
                     <td>{{row.pic_name}}</td>
-                    <td>{{row.category}}</td>
-                    <td>{{row.schedule}}</td>
-                    <td>{{row.status}}</td>
+                    <td>{{row.time_start}}</td>
+                    <td>{{row.time_end}}</td>
                     <td><a href="/event_edit/{{row.id}}">Edit</a></td>
                 </tr>
                 {% endfor %}
