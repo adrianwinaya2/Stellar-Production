@@ -23,21 +23,23 @@
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
             <thead><tr>
+                <th class="wd-15p">Name</th>
                 <th class="wd-8p">Client</th>
                 <th class="wd-8p">PIC</th>
-                <th class="wd-15p">Name</th>
+                <th class="wd-15p">Category</th>
                 <th class="wd-15p">Schedule</th>
                 <th class="wd-15p">Status</th>
                 <th class="wd-15p">Action</th>
             </tr></thead>
             <tbody>
                 {% for row in table %}
-                <tr><td>{{row.client_name}}</td>
+                <tr><td>{{row.name}}</td>
+                    <td>{{row.client_name}}</td>
                     <td>{{row.pic_name}}</td>
-                    <td>{{row.name}}</td>
+                    <td>{{row.category}}</td>
                     <td>{{row.schedule}}</td>
                     <td>{{row.status}}</td>
-                    <td><a href="/resto_edit/{{row.id}}">Edit</a></td>
+                    <td><a href="/event_edit/{{row.id}}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

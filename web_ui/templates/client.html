@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Order{% endblock %}
+{% block title %}Client{% endblock %}
 {% block scripthead %}
     <link href="{{ url_for('static', filename='lib/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='lib/jt.timepicker/jquery.timepicker.css') }}" rel="stylesheet">
@@ -14,8 +14,8 @@
     <script src="{{ url_for('static', filename='lib/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/datatables-responsive/dataTables.responsive.js') }}"></script>
 {% endblock %}
-{% block nav %}Order{% endblock %}
-{% block formtitle %}Order{% endblock %}
+{% block nav %}Client{% endblock %}
+{% block formtitle %}Client{% endblock %}
 {% block content %}
 
     <style>table.dataTable.nowrap th, table.dataTable.nowrap td {white-space: normal}</style>
@@ -23,21 +23,17 @@
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
             <thead><tr>
-                <th class="wd-8p">Client</th>
-                <th class="wd-8p">PIC</th>
                 <th class="wd-15p">Name</th>
-                <th class="wd-15p">Schedule</th>
-                <th class="wd-15p">Status</th>
+                <th class="wd-15p">Username</th>
+                <th class="wd-15p">Email</th>
                 <th class="wd-15p">Action</th>
             </tr></thead>
             <tbody>
                 {% for row in table %}
-                <tr><td>{{row.client_name}}</td>
-                    <td>{{row.pic_name}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.schedule}}</td>
-                    <td>{{row.status}}</td>
-                    <td><a href="/resto_edit/{{row.id}}">Edit</a></td>
+                <tr><td>{{row.name}}</td>
+                    <td>{{row.username}}</td>
+                    <td>{{row.email}}</td>
+                    <td><a href="/client_edit/{{row.id}}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
