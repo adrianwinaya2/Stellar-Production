@@ -1,5 +1,6 @@
 services:
   StaffSQL:
+    container_name: StaffSQL
     image: mysql
     ports:
       - 3309:3309
@@ -10,6 +11,7 @@ services:
     networks:
       - StaffNet
   StaffProd:
+    container_name: StaffProd
     build: ./StaffProd/
     image: staff_pfpm
     ports:
@@ -21,6 +23,7 @@ services:
       StaffSQL:
         condition: service_started
   StaffCons:
+    container_name: StaffCons
     build: ./StaffCons/
     image: staff_ppm
     networks:

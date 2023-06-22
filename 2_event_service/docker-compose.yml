@@ -1,5 +1,6 @@
 services:
   EventSQL:
+    container_name: EventSQL
     image: mysql
     ports:
       - 3307:3307
@@ -10,6 +11,7 @@ services:
     networks:
       - EventNet
   EventProd:
+    container_name: EventProd
     build: ./EventProd/
     image: event_pfpm
     ports:
@@ -21,6 +23,7 @@ services:
       EventSQL:
         condition: service_started
   EventCons:
+    container_name: EventCons
     build: ./EventCons/
     image: event_ppm
     networks:

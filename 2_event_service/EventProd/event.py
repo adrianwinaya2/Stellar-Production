@@ -40,7 +40,7 @@ def event():
         print(auth)
 
         # ambil data order
-        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e WHERE id=%s INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
+        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
         dbc.execute(sql)
         events = dbc.fetchall()
 
@@ -51,10 +51,8 @@ def event():
             json_list = []
             for row in events:
                 row_dict = dict(zip(column_names, row))
-                row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-                json_string = json.dumps(row_dict)
-
-                json_list.append(json_string)
+                # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+                json_list.append(row_dict)
 
             status_code = 200
             jsondoc = json.dumps(json_list)
@@ -118,7 +116,7 @@ def event2(id):
         print(auth)
 
         # ambil data order
-        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e WHERE id=%s INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
+        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id WHERE e.id=%s"
         dbc.execute(sql, [id])
         event = dbc.fetchone()
 
@@ -128,7 +126,7 @@ def event2(id):
         if event != None:
 
             row_dict = dict(zip(column_names, event))
-            row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
             json_string = json.dumps(row_dict)
 
             status_code = 200

@@ -1,5 +1,6 @@
 services:
   ClientSQL:
+    container_name: ClientSQL
     image: mysql
     ports:
       - 3308:3308
@@ -10,6 +11,7 @@ services:
     networks:
       - ClientNet
   ClientProd:
+    container_name: ClientProd
     build: ./ClientProd/
     image: client_pfpm
     ports:
@@ -21,6 +23,7 @@ services:
       ClientSQL:
         condition: service_started
   ClientCons:
+    container_name: ClientCons
     build: ./ClientCons/
     image: client_ppm
     networks:

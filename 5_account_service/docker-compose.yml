@@ -1,5 +1,6 @@
 services:
   AccountSQL:
+    container_name: AccountSQL
     image: mysql
     ports:
       - 3310:3310
@@ -10,6 +11,7 @@ services:
     networks:
       - AccountNet
   AccountProd:
+    container_name: AccountProd
     build: ./AccountProd/
     image: account_pfpm
     ports:
@@ -21,6 +23,7 @@ services:
       AccountSQL:
         condition: service_started
   AccountCons:
+    container_name: AccountCons
     build: ./AccountCons/
     image: account_ppm
     networks:

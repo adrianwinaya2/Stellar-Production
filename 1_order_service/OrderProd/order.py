@@ -42,7 +42,7 @@ def order():
         print(auth)
 
         # ambil data order
-        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o WHERE id=%s INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id"
+        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id"
         dbc.execute(sql)
         orders = dbc.fetchall()
 
@@ -53,10 +53,8 @@ def order():
             json_list = []
             for row in orders:
                 row_dict = dict(zip(column_names, row))
-                row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-                json_string = json.dumps(row_dict)
-
-                json_list.append(json_string)
+                # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+                json_list.append(row_dict)
 
             status_code = 200
             jsondoc = json.dumps(json_list)
@@ -122,7 +120,7 @@ def order2(id):
         print(auth)
 
         # ambil data order
-        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o WHERE id=%s INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id"
+        sql = "SELECT o.*, c.name AS client_name, s.name AS pic_name FROM `Order` as o INNER JOIN Client as c ON o.client_id = c.id INNER JOIN Staff as s ON o.pic_id = s.id WHERE o.id=%s"
         dbc.execute(sql, [id])
         order = dbc.fetchone()
 
@@ -132,11 +130,10 @@ def order2(id):
         if order != None:
 
             row_dict = dict(zip(column_names, order))
-            row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-            json_string = json.dumps(row_dict)
+            # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
 
             status_code = 200
-            jsondoc = json.dumps(json_string)
+            jsondoc = json.dumps(row_dict)
 
         else: 
             status_code = 404 

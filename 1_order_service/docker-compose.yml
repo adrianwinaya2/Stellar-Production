@@ -1,5 +1,6 @@
 services:
   OrderSQL:
+    container_name: OrderSQL
     image: mysql
     ports:
       - 3306:3306
@@ -10,6 +11,7 @@ services:
     networks:
       - OrderNet
   OrderProd:
+    container_name: OrderProd
     build: ./OrderProd/
     image: order_pfpm
     ports:
@@ -21,6 +23,7 @@ services:
       OrderSQL:
         condition: service_started
   OrderCons:
+    container_name: OrderCons
     build: ./OrderCons/
     image: order_ppm
     networks:
@@ -32,4 +35,6 @@ services:
 
 networks:
   EONet:
+    external: true
   OrderNet:
+    external: true
