@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Order{% endblock %}
+{% block title %}Event{% endblock %}
 {% block scripthead %}
     <link href="{{ url_for('static', filename='lib/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='lib/jt.timepicker/jquery.timepicker.css') }}" rel="stylesheet">
@@ -14,8 +14,8 @@
     <script src="{{ url_for('static', filename='lib/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/datatables-responsive/dataTables.responsive.js') }}"></script>
 {% endblock %}
-{% block nav %}Order{% endblock %}
-{% block formtitle %}Order{% endblock %}
+{% block nav %}Event{% endblock %}
+{% block formtitle %}Event{% endblock %}
 {% block content %}
 
     <style>table.dataTable.nowrap th, table.dataTable.nowrap td {white-space: normal}</style>
@@ -37,7 +37,7 @@
                     <td>{{row.name}}</td>
                     <td>{{row.schedule}}</td>
                     <td>{{row.status}}</td>
-                    <td><a href="/order_edit/{{row.id}}">Edit</a></td>
+                    <td><a href="/resto_edit/{{row.id}}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

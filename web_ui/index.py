@@ -29,11 +29,50 @@ def resto():
     return render_template('order.html', display_attrs=display_attrs, table=data)
 
 
+@app.route('/event/', methods=['GET', 'POST'])
+def resto():
+
+    with urllib.request.urlopen("http://localhost:5501/event") as url:
+        data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('event.html', display_attrs=display_attrs, table=data)
+
+
+@app.route('/client/', methods=['GET', 'POST'])
+def resto():
+
+    with urllib.request.urlopen("http://localhost:5502/client") as url:
+        data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('client.html', display_attrs=display_attrs, table=data)
+
+
+@app.route('/staff/', methods=['GET', 'POST'])
+def resto():
+
+    with urllib.request.urlopen("http://localhost:5503/staff") as url:
+        data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('staff.html', display_attrs=display_attrs, table=data)
+
+
+@app.route('/account/', methods=['GET', 'POST'])
+def resto():
+
+    with urllib.request.urlopen("http://localhost:5504/account") as url:
+        data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('account.html', display_attrs=display_attrs, table=data)
+
 
 #====================================================================================
 # EDIT RESTO
 #====================================================================================
-@app.route('/resto_edit/<path:id>', methods=['GET', 'POST'])
+@app.route('/order_edit/<path:id>', methods=['GET', 'POST'])
 def resto_edit(id):
 
     # -------------------------------------------------------
