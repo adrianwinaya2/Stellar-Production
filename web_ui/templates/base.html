@@ -21,6 +21,17 @@
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bracket.css') }}">
+
+    <style>
+      .create-button {
+          display: inline-block;
+          padding: 8px 16px;
+          background-color: green;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+      }
+  </style>
   </head>
 
   <body style="background-color: {{display_attrs.bgcolor}};">
@@ -81,7 +92,7 @@
     <div class="br-mainpanel">
       <div class="br-pageheader pd-y-15 pd-l-20"  style="background-color: {{display_attrs.bgbreadcolor}};">
         <nav class="breadcrumb pd-0 mg-0 tx-12">
-          <a class="breadcrumb-item" href="/">KANTIN</a>
+          <a class="breadcrumb-item" href="/">Stellar</a>
           <span class="breadcrumb-item active">{% block nav %}{% endblock %}</span>
         </nav>
       </div><!-- br-pageheader -->
@@ -97,7 +108,7 @@
 
       <footer class="br-footer">
         <div class="footer-left">
-          <div class="mg-b-2">Copyright &copy; 2020. kantinpetra.com. All Rights Reserved.</div>
+          <div class="mg-b-2">Copyright &copy; 2023. StellarEO. All Rights Reserved.</div>
         </div>
         <div class="footer-right d-flex align-items-center">
           <span class="tx-uppercase mg-r-10">Share:</span>
@@ -118,7 +129,17 @@
     <script src="{{ url_for('static', filename='lib/jquery-switchbutton/jquery.switchButton.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/peity/jquery.peity.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <script src="{{ url_for('static', filename='js/bracket.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function () {
+          $('#datatable1').DataTable();
+      });
+    </script>
 
     {% block scriptbody %}{% endblock %}
   </body>

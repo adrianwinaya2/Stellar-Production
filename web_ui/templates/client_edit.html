@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Edit Resto{% endblock %}
+{% block title %}Edit Client{% endblock %}
 {% block scripthead %}
     <link href="{{ url_for('static', filename='lib/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='lib/jt.timepicker/jquery.timepicker.css') }}" rel="stylesheet">
@@ -14,8 +14,8 @@
     <script src="{{ url_for('static', filename='lib/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ url_for('static', filename='lib/datatables-responsive/dataTables.responsive.js') }}"></script>
 {% endblock %}
-{% block nav %}Edit Resto{% endblock %}
-{% block formtitle %}Edit Resto{% endblock %}
+{% block nav %}Edit Client{% endblock %}
+{% block formtitle %}Edit Client{% endblock %}
 {% block content %}
     <div class="br-section-wrapper" style="padding:0px;">
         <form method="post">
@@ -29,16 +29,30 @@
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Nama</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="nama" name="nama" class="form-control" value="{{ formdata.nama }}" placeholder="Enter any text">
+                <input type="text" id="pic" name="pic" class="form-control" value="{{ formdata.pic }}" placeholder="Enter any text">
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Gedung</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Order Name</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="gedung" name="gedung" class="form-control" value="{{ formdata.gedung }}" placeholder="Enter any text">
+                <input type="text" id="name" name="name" class="form-control" value="{{ formdata.name }}" placeholder="Enter any text">
+                </div>
+            </div><!-- row -->
+
+            <div class="row mg-t-10">
+                <label class="col-sm-3 form-control-label" for="chrtext">Schedule</label>
+                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                <input type="datetime-local" id="schedule" name="schedule" class="form-control" value="{{ formdata.schedule }}" placeholder="Enter any date">
+                </div>
+            </div><!-- row -->
+
+            <div class="row mg-t-10">
+                <label class="col-sm-3 form-control-label" for="chrtext">Status</label>
+                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                <input type="text" id="status" name="status" class="form-control" value="{{ formdata.status }}" placeholder="Enter any text">
                 </div>
             </div><!-- row -->
 

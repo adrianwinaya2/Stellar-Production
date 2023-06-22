@@ -19,6 +19,7 @@
 {% block content %}
 
     <style>table.dataTable.nowrap th, table.dataTable.nowrap td {white-space: normal}</style>
+
     <div class="br-section-wrapper mg-t-20 pd-30">
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
@@ -37,11 +38,12 @@
                     <td>{{row.name}}</td>
                     <td>{{row.schedule}}</td>
                     <td>{{row.status}}</td>
-                    <td><a href="/order_edit/{{row.id}}">Edit</a></td>
+                    <td><a href="/order/edit/{{row.id}}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <a href="/order/new" class="create-button">Create New</a>
       </div><!-- table-wrapper -->
     </div>
 

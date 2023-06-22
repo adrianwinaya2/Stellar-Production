@@ -23,8 +23,8 @@
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
             <thead><tr>
-                <th class="wd-15p">Name</th>
                 <th class="wd-8p">Order</th>
+                <th class="wd-15p">Name</th>
                 <th class="wd-8p">PIC</th>
                 <th class="wd-15p">Start</th>
                 <th class="wd-15p">End</th>
@@ -32,8 +32,8 @@
             </tr></thead>
             <tbody>
                 {% for row in table %}
-                <tr><td>{{row.name}}</td>
-                    <td>{{row.order_name}}</td>
+                <tr><td>{{row.order_name}}</td>
+                    <td>{{row.name}}</td>
                     <td>{{row.pic_name}}</td>
                     <td>{{row.time_start}}</td>
                     <td>{{row.time_end}}</td>
@@ -42,6 +42,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <a href="/event/new" class="create-button">Create New</a>
       </div><!-- table-wrapper -->
     </div>
 
