@@ -35,4 +35,6 @@ services:
 
 networks:
   EONet:
+      external: true
   StaffNet:
+      external: true

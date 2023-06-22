@@ -44,18 +44,20 @@ def event():
         dbc.execute(sql)
         events = dbc.fetchall()
 
-        column_names = [desc[0] for desc in dbc.description]
+        # column_names = [desc[0] for desc in dbc.description]
 
         if events != None:
 
-            json_list = []
+            # json_list = []
             for row in events:
-                row_dict = dict(zip(column_names, row))
+                # row_dict = dict(zip(column_names, row))
                 # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-                json_list.append(row_dict)
+                # json_list.append(row_dict)
+                row['time_start'] = str(row['time_start'])
+                row['time_end'] = str(row['time_end'])
 
             status_code = 200
-            jsondoc = json.dumps(json_list)
+            jsondoc = json.dumps(events)
 
         else: 
             status_code = 404 
@@ -120,17 +122,20 @@ def event2(id):
         dbc.execute(sql, [id])
         event = dbc.fetchone()
 
-        column_names = [desc[0] for desc in dbc.description]
+        # column_names = [desc[0] for desc in dbc.description]
         # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
 
         if event != None:
 
-            row_dict = dict(zip(column_names, event))
+            # row_dict = dict(zip(column_names, event))
             # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-            json_string = json.dumps(row_dict)
+            # json_string = json.dumps(row_dict)
+
+            event['time_start'] = str(event['time_start'])
+            event['time_end'] = str(event['time_end'])
 
             status_code = 200
-            jsondoc = json.dumps(json_string)
+            jsondoc = json.dumps(event)
 
         else: 
             status_code = 404 

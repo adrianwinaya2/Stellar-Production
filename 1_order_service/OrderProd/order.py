@@ -46,18 +46,21 @@ def order():
         dbc.execute(sql)
         orders = dbc.fetchall()
 
-        column_names = [desc[0] for desc in dbc.description]
+        # column_names = [desc[0] for desc in dbc.description]
 
         if orders != None:
 
-            json_list = []
+            # json_list = []
+            # for row in orders:
+            #     row_dict = dict(zip(column_names, row))
+            #     # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            #     json_list.append(row_dict)
+
             for row in orders:
-                row_dict = dict(zip(column_names, row))
-                # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-                json_list.append(row_dict)
+                row['schedule'] = row['schedule'].strftime('%Y-%m-%d %H:%M:%S')
 
             status_code = 200
-            jsondoc = json.dumps(json_list)
+            jsondoc = json.dumps(orders)
 
         else: 
             status_code = 404 
@@ -124,16 +127,17 @@ def order2(id):
         dbc.execute(sql, [id])
         order = dbc.fetchone()
 
-        column_names = [desc[0] for desc in dbc.description]
+        # column_names = [desc[0] for desc in dbc.description]
         # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
 
         if order != None:
 
-            row_dict = dict(zip(column_names, order))
+            # row_dict = dict(zip(column_names, order))
             # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
 
             status_code = 200
-            jsondoc = json.dumps(row_dict)
+            jsondoc = json.dumps(order)
 
         else: 
             status_code = 404 
