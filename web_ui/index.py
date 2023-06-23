@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import json, sys
 import urllib.request, requests
 
@@ -187,20 +187,13 @@ def order_input():
     if (request.method == "POST"):
         postdata = request.form.lists()
 
-        data = {
-            "id": str(id),
-            "name": postdata["name"],
-            "status": postdata["status"]
-        }
-        data["id"] = str(id)
-        for i in postdata:
-            if(i[0] == "name"):   data["name"] = i[1][0]
-            if(i[0] == "status"): data["status"] = i[1][0]
+        data = {key: value[0] for key, value in postdata}
+        data['client_id'] = session['client_id']
         jsondoc = json.dumps(data)
         print(jsondoc)
 
         headers = {'Content-Type': 'application/json'}
-        requests.post("http://localhost:5500/order/", data=jsondoc, headers=headers)
+        requests.post("http://localhost:5500/order", data=jsondoc, headers=headers)
         # urllib.request.urlopen(url)
 
         return redirect("/order/")
@@ -208,8 +201,14 @@ def order_input():
     # -------------------------------------------------------
     # kalau tidak ada data POST dari perubahan data di form, 
     # tampilkan form berisi data yang siap diubah
+    with urllib.request.urlopen("http://localhost:5503/staff") as url:
+        staff_data = json.load(url)
+        
+    with urllib.request.urlopen("http://localhost:5502/client") as url:
+        client_data = json.load(url)
+
     display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('order_edit.html', display_attrs=display_attrs)
+    return render_template('order_new.html', display_attrs=display_attrs, staff_data=staff_data)
 
 # ! EVENT
 @app.route('/event/edit/<path:id>', methods=['GET', 'POST'])
@@ -258,32 +257,61 @@ def event_edit(id):
         return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
 
 # ! ACCOUNT
-@app.route('/account/login', methods=['POST'])
-def account():
+@app.route('/account/login', methods=['GET', 'POST'])
+def login():
+
+    login_failed = False
 
     if (request.method == "POST"):
         postdata = request.form.lists()
+
         data = {}
-        data["id"] = str(id)
         for i in postdata:
-            if(i[0] == "name"):   data["name"] = i[1][0]
-            if(i[0] == "status"): data["status"] = i[1][0]
+            if(i[0] == "name"):   postdata["username"] = i[1][0]
+            if(i[0] == "name"):   postdata["password"] = i[1][0]
+            # if(i[0] == "status"): data["role"] = i[1][0]
         jsondoc = json.dumps(data)
         print(jsondoc)
 
         headers = {'Content-Type': 'application/json'}
-        requests.post(f"http://localhost:5501/event/{id}", data=jsondoc, headers=headers)
-        urllib.request.urlopen(url)
+        response = requests.post(f"http://localhost:5504/authenticate", data=jsondoc, headers=headers)
+        # urllib.request.urlopen(url)
 
-        return redirect("/")
-
-    with urllib.request.urlopen("http://localhost:5504/account/login") as url:
-        data = json.load(url)
+        if response.status_code == 200:
+            return redirect("/")
+        login_failed = True
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('login.html', display_attrs=display_attrs, login_failed=login_failed)
 
+@app.route('/account/register', methods=['GET', 'POST'])
+def register():
 
-    return render_template('account.html', display_attrs=display_attrs, table=data)
+    register_failed = ''
+
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {}
+        
+        for i in postdata:
+            if(i[0] == "name"):   data["username"] = i[1][0]
+            if(i[0] == "name"):   data["password"] = i[1][0]
+            if(i[0] == "status"): data["role"] = i[1][0]
+            if(i[0] == "name"): data["name"] = i[1][0]
+            if(i[0] == "email"): data["email"] = i[1][0]
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(f"http://localhost:5504/register", data=jsondoc, headers=headers)
+        # urllib.request.urlopen(url)
+
+        if response.status_code == 201:
+            return redirect("/")
+        register_failed = response.json()['message']
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('register.html', display_attrs=display_attrs, login_failed=register_failed)
 
 
 if __name__ == "__main__":
