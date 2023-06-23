@@ -272,14 +272,9 @@ def login():
     login_failed = False
 
     if (request.method == "POST"):
-        postdata = request.form.lists()
+        postdata = request.form.to_dict()
 
-        data = {}
-        for i in postdata:
-            if(i[0] == "name"):   postdata["username"] = i[1][0]
-            if(i[0] == "name"):   postdata["password"] = i[1][0]
-            # if(i[0] == "status"): data["role"] = i[1][0]
-        jsondoc = json.dumps(data)
+        jsondoc = json.dumps(postdata)
         print(jsondoc)
 
         headers = {'Content-Type': 'application/json'}

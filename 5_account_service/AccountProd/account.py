@@ -110,10 +110,10 @@ def authenticate():
             dbc.execute(sql, [username] )
             account = dbc.fetchone()
 
-            if account and account[0] == password:
+            if account and account["password"] == password:
                 status_code = 200
-                session['account_id'] = account[0]
-                jsondoc = json.dumps({'status': 'success', 'account_id': account[0]})
+                session['account_id'] = account["id"]
+                jsondoc = json.dumps({'status': 'success', 'account_id': account["id"]})
             else:
                 status_code = 401
                 jsondoc = json.dumps({'status': 'failed'})
