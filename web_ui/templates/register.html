@@ -46,20 +46,47 @@
         .register-form input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .register-form .position-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="register-container">
         <h1 class="register-title">Register</h1>
 
+        <p class="error-message" style="color:red">{{register_failed}}</p>
+
         <form class="register-form" method="POST" action="/account/register">
 
             <div class="form-group">
                 <label for="role">Role:</label>
-                <select id="role" name="role" class="form-control">
+                <select id="role" name="role" class="form-control" onchange="toggleDropdown()">
                     <option value="Client">Client</option>
                     <option value="Staff">Staff</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div id="positionContainer" class="position-container" style="display: none;">
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <select id="position" name="position" class="form-control">
+                        <option value="Leader">Leader</option>
+                        <option value="Coordinator">Coordinator</option>
+                        <option value="Member">Member</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
@@ -84,5 +111,16 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        function toggleDropdown() {
+            var role = document.getElementById("role").value;
+            var dropdownContainer = document.getElementById("positionContainer");
+            if (role === "Staff") {
+                dropdownContainer.style.display = "block";
+            } else {
+                dropdownContainer.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
