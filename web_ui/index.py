@@ -3,6 +3,7 @@ import json, sys
 import urllib.request, requests
 
 app = Flask(__name__)
+app.secret_key = 'stellar_production_secret_key'
 
 @app.before_request
 def require_authentication():
