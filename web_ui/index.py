@@ -19,6 +19,17 @@ def order():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('order.html', display_attrs=display_attrs, table=data)
 
+@app.route('/order/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def order2(id):
+    
+    with urllib.request.urlopen(f"http://localhost:5500/order/{id}") as url:
+        data = json.load(url)
+        data = [data]
+        print(data)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('order.html', display_attrs=display_attrs, table=data)
+
 
 @app.route('/event/', methods=['GET', 'POST'])
 def event():
@@ -32,13 +43,13 @@ def event():
 @app.route('/event/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def event2(id):
     
-    with urllib.request.urlopen(f"http://localhost:5500/event/{id}") as url:
+    with urllib.request.urlopen(f"http://localhost:5501/event/{id}") as url:
         data = json.load(url)
         data = [data]
         print(data)
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('order.html', display_attrs=display_attrs, table=data)
+    return render_template('event.html', display_attrs=display_attrs, table=data)
 
 
 # ! CLIENTS
@@ -194,9 +205,12 @@ def order_input():
             formdata["id"] = str(id)
             formdata["name"] = data["name"]
             formdata["status"] = data["status"]
+        
+        with urllib.request.urlopen("http://localhost:5503/staff") as url:
+            staff_data = json.load(url)
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-        return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata)
+        return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
 
 # ! EVENT
 @app.route('/event/edit/<path:id>', methods=['GET', 'POST'])

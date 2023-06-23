@@ -23,14 +23,14 @@
     <div class="br-section-wrapper mg-t-20 pd-30">
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
-            <thead><tr>
-                <th class="wd-8p">Client</th>
-                <th class="wd-8p">PIC</th>
-                <th class="wd-15p">Name</th>
-                <th class="wd-15p">Schedule</th>
-                <th class="wd-15p">Status</th>
-                <th class="wd-8p">Action</th>
-            </tr></thead>
+                <thead><tr>
+                    <th class="wd-15p">Client</th>
+                    <th class="wd-15p">PIC</th>
+                    <th class="wd-15p">Name</th>
+                    <th class="wd-20p">Schedule</th>
+                    <th class="wd-15p">Status</th>
+                    <th class="wd-8p">Action</th>
+                </tr></thead>
             <tbody>
                 {% for row in table %}
                 <tr><td>{{row.client_name}}</td>

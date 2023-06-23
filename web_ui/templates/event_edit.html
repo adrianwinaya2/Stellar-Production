@@ -43,9 +43,13 @@
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">PIC ID</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="pic_id" name="pic_id" class="form-control" value="{{ formdata.pic_id }}" placeholder="Enter any ID">
+                    <select id="pic_id" name="pic_id" class="form-control">
+                        {% for staff in staff_data %}
+                            <option value="{{ staff.id }}" {% if staff.id == formdata.pic_id %}selected{% endif %}>{{ staff.id }} - {{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div><!-- row -->
 

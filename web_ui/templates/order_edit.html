@@ -31,7 +31,11 @@
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="pic" name="pic" class="form-control" value="{{ formdata.pic }}" placeholder="Enter any text">
+                    <select id="pic_id" name="pic_id" class="form-control">
+                        {% for staff in staff_data %}
+                            <option value="{{ staff.id }}" {% if staff.id == formdata.pic_id %}selected{% endif %}>{{ staff.id }} - {{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div><!-- row -->
 
@@ -52,7 +56,11 @@
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">Status</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="status" name="status" class="form-control" value="{{ formdata.status }}" placeholder="Enter any text">
+                    <select id="status" name="status" class="form-control">
+                        <option value="Done" {% if formdata.status == 'Done' %}selected{% endif %}>Done</option>
+                        <option value="Scheduled" {% if formdata.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                        <option value="Cancelled" {% if formdata.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
                 </div>
             </div><!-- row -->
 
