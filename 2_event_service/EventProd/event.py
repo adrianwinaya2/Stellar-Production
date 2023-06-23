@@ -229,19 +229,20 @@ def event3(id):
         # ambil data order
         sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id WHERE o.id=%s"
         dbc.execute(sql, [id])
-        order = dbc.fetchone()
+        events = dbc.fetchall()
 
         # column_names = [desc[0] for desc in dbc.description]
         # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
 
-        if order != None:
+        if events != None:
 
-            # row_dict = dict(zip(column_names, order))
-            # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
-            order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            # json_list = []
+            for row in events:
+                row['time_start'] = str(row['time_start'])
+                row['time_end'] = str(row['time_end'])
 
             status_code = 200
-            jsondoc = json.dumps(order)
+            jsondoc = json.dumps(events)
 
         else: 
             status_code = 404 
