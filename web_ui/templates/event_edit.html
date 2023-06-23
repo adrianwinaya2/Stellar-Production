@@ -29,30 +29,37 @@
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Order Name</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="pic" name="pic" class="form-control" value="{{ formdata.pic }}" placeholder="Enter any text">
+                <input type="text" id="order_name" name="order_name" class="form-control" value="{{ formdata.order_name }}" placeholder="Enter any text" disabled>
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Order Name</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Name</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
                 <input type="text" id="name" name="name" class="form-control" value="{{ formdata.name }}" placeholder="Enter any text">
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Schedule</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">PIC ID</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="datetime-local" id="schedule" name="schedule" class="form-control" value="{{ formdata.schedule }}" placeholder="Enter any date">
+                <input type="text" id="pic_id" name="pic_id" class="form-control" value="{{ formdata.pic_id }}" placeholder="Enter any ID">
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Status</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Start</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="status" name="status" class="form-control" value="{{ formdata.status }}" placeholder="Enter any text">
+                <input type="time" id="time_start" name="time_start" class="form-control" value="{{ formdata.time_start }}" placeholder="Enter any date">
+                </div>
+            </div><!-- row -->
+
+            <div class="row mg-t-10">
+                <label class="col-sm-3 form-control-label" for="chrtext">End</label>
+                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                <input type="time" id="time_end" name="time_end" class="form-control" value="{{ formdata.time_end }}" placeholder="Enter any date">
                 </div>
             </div><!-- row -->
 

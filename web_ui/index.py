@@ -82,7 +82,7 @@ def staff():
 
 
 #====================================================================================
-# EDIT RESTO
+# EDIT ORDER
 #====================================================================================
 @app.route('/order/edit/<path:id>', methods=['GET', 'POST'])
 def order_edit(id):
@@ -122,6 +122,46 @@ def order_edit(id):
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
         return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata)
+
+@app.route('/event/edit/<path:id>', methods=['GET', 'POST'])
+def event_edit(id):
+
+    # -------------------------------------------------------
+    # kalau ada data POST maka kirim data json melalui REST ke KantinSvc
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {}
+        data["id"] = str(id)
+        for i in postdata:
+            if(i[0] == "name"):   data["name"] = i[1][0]
+            if(i[0] == "status"): data["status"] = i[1][0]
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
+        url     = "http://localhost:5501/event/" + str(id)
+        headers = {'Content-Type': 'application/json'}
+        requests.put(url, data=jsondoc, headers=headers)
+        urllib.request.urlopen(url)
+
+        return redirect("/event/")
+
+    # -------------------------------------------------------
+    # kalau tidak ada data POST dari perubahan data di form, 
+    # tampilkan form berisi data yang siap diubah
+    else:
+        data_url = "http://localhost:5501/event/" + str(id)
+        with urllib.request.urlopen(data_url) as url:
+            data = json.load(url)
+            formdata={}
+            formdata["id"] = str(id)
+            formdata["order_name"] = data["order_name"]
+            formdata["name"] = data["name"]
+            formdata["pic_id"] = data["pic_id"]
+            formdata["time_start"] = data["time_start"]
+            formdata["time_end"] = data["time_end"]
+
+        display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+        return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata)
 
 @app.route('/order/new', methods=['GET', 'POST'])
 def order_input(id):
