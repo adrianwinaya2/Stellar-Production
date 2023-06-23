@@ -148,7 +148,7 @@ def order2(id):
     elif HTTPRequest.method == 'PUT':
         data = json.loads(HTTPRequest.data)
         # client_id = data['client_id'] # gak butuh
-        pic_id = data['pic_id']
+        pic_id = int(data['pic_id'])
         name = data['name']
         # category = data['category'] # gak butuh
         schedule = data['schedule']
@@ -156,7 +156,7 @@ def order2(id):
 
         try:
             # ubah nama staff dan gedung di database
-            sql = "UPDATE `Order` SET pic_id=%s, name=%s, schedule=%s, status=%s, WHERE id=%s;"
+            sql = "UPDATE `Order` SET pic_id=%s, name=%s, schedule=%s, status=%s WHERE id=%s;"
             dbc.execute(sql, [pic_id, name, schedule, status, id] )
             db.commit()
 

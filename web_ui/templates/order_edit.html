@@ -21,13 +21,15 @@
         <form method="post">
         <div class="form-layout form-layout-4 mg-t-20" style="background-color:#fff">
 
+            <!-- ID -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">ID</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
                 <input type="text" id="id" name="id" class="form-control" value="{{ formdata.id }}" placeholder="Enter any text" disabled>
                 </div>
             </div><!-- row -->
-
+            
+            <!-- PIC ID -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
@@ -39,6 +41,7 @@
                 </div>
             </div><!-- row -->
 
+            <!-- NAME -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">Order Name</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
@@ -46,6 +49,15 @@
                 </div>
             </div><!-- row -->
 
+            <!-- CATEGORY -->
+            <div class="row mg-t-10">
+                <label class="col-sm-3 form-control-label" for="chrtext">Order Category</label>
+                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                <input type="text" id="category" name="category" class="form-control" value="{{ formdata.category }}" placeholder="Enter any text" disabled>
+                </div>
+            </div><!-- row -->
+
+            <!-- SCHEDULE -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">Schedule</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
@@ -53,6 +65,7 @@
                 </div>
             </div><!-- row -->
 
+            <!-- STATUS -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">Status</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">

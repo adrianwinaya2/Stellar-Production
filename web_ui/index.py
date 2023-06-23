@@ -9,7 +9,7 @@ app = Flask(__name__)
 #====================================================================================
 
 # ! ORDERS
-@app.route('/order/', methods=['GET', 'POST'])
+@app.route('/order/', methods=['GET'])
 def order():
 
     with urllib.request.urlopen("http://localhost:5500/order") as url:
@@ -19,7 +19,7 @@ def order():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('order.html', display_attrs=display_attrs, table=data)
 
-@app.route('/order/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/order/<int:id>', methods=['GET'])
 def order2(id):
     
     with urllib.request.urlopen(f"http://localhost:5500/order/{id}") as url:
@@ -30,8 +30,8 @@ def order2(id):
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('order.html', display_attrs=display_attrs, table=data)
 
-
-@app.route('/event/', methods=['GET', 'POST'])
+# ! EVENTS
+@app.route('/event/', methods=['GET'])
 def event():
 
     with urllib.request.urlopen("http://localhost:5501/event") as url:
@@ -40,12 +40,22 @@ def event():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('event.html', display_attrs=display_attrs, table=data)
 
-@app.route('/event/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/event/<int:id>', methods=['GET'])
 def event2(id):
     
     with urllib.request.urlopen(f"http://localhost:5501/event/{id}") as url:
         data = json.load(url)
         data = [data]
+        print(data)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('event.html', display_attrs=display_attrs, table=data)
+
+@app.route('/order/<int:id>/events', methods=['GET'])
+def event3(id):
+    
+    with urllib.request.urlopen(f"http://localhost:5501/order/{id}/events") as url:
+        data = json.load(url)
         print(data)
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
@@ -62,7 +72,7 @@ def client():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('client.html', display_attrs=display_attrs, table=data)
 
-@app.route('/client/<int:id>', methods=['GET', 'PUT', 'DELEETE'])
+@app.route('/client/<int:id>', methods=['GET'])
 def client2(id):
 
     with urllib.request.urlopen(f"http://localhost:5502/client/{id}") as url:
@@ -83,7 +93,7 @@ def staff():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('staff.html', display_attrs=display_attrs, table=data)
 
-@app.route('/staff/<int:id>', methods=['GET', 'PUT', 'DELEETE'])
+@app.route('/staff/<int:id>', methods=['GET'])
 def staff2(id):
 
     with urllib.request.urlopen(f"http://localhost:5503/staff/{id}") as url:
@@ -94,7 +104,7 @@ def staff2(id):
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('staff.html', display_attrs=display_attrs, table=data)
 
-@app.route('/staff/<string:position>', methods=['GET', 'PUT', 'DELEETE'])
+@app.route('/staff/<string:position>', methods=['GET'])
 def staff3(position):
 
     with urllib.request.urlopen(f"http://localhost:5503/staff/{position}") as url:
@@ -103,7 +113,6 @@ def staff3(position):
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('staff.html', display_attrs=display_attrs, table=data)
-
 
 # Tidak ada method GET nya
 # @app.route('/account/', methods=['GET', 'POST'])
@@ -136,17 +145,14 @@ def order_edit(id):
     # kalau ada data POST maka kirim data json melalui REST ke KantinSvc
     if (request.method == "POST"):
         postdata = request.form.lists()
-        data = {}
-        data["id"] = str(id)
-        for i in postdata:
-            if(i[0] == "name"):   data["name"] = i[1][0]
-            if(i[0] == "status"): data["status"] = i[1][0]
+
+        data = {key: value[0] for key, value in postdata}
         jsondoc = json.dumps(data)
         print(jsondoc)
 
         headers = {'Content-Type': 'application/json'}
         requests.put(f"http://localhost:5500/order/{id}", data=jsondoc, headers=headers)
-        urllib.request.urlopen(url)
+        # urllib.request.urlopen(url)
 
         return redirect("/order/")
 
@@ -161,6 +167,7 @@ def order_edit(id):
             formdata = {
                 "id": str(id),
                 "pic": order_data["pic_name"],
+                "category": order_data["category"],
                 "name": order_data["name"],
                 "schedule": order_data["schedule"],
                 "status": order_data["status"]
@@ -181,7 +188,9 @@ def order_input():
         postdata = request.form.lists()
 
         data = {
-            
+            "id": str(id),
+            "name": postdata["name"],
+            "status": postdata["status"]
         }
         data["id"] = str(id)
         for i in postdata:
@@ -247,6 +256,34 @@ def event_edit(id):
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
         return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
+
+# ! ACCOUNT
+@app.route('/account/login', methods=['POST'])
+def account():
+
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {}
+        data["id"] = str(id)
+        for i in postdata:
+            if(i[0] == "name"):   data["name"] = i[1][0]
+            if(i[0] == "status"): data["status"] = i[1][0]
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
+        headers = {'Content-Type': 'application/json'}
+        requests.post(f"http://localhost:5501/event/{id}", data=jsondoc, headers=headers)
+        urllib.request.urlopen(url)
+
+        return redirect("/")
+
+    with urllib.request.urlopen("http://localhost:5504/account/login") as url:
+        data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+
+
+    return render_template('account.html', display_attrs=display_attrs, table=data)
 
 
 if __name__ == "__main__":

@@ -211,8 +211,8 @@ def event2(id):
     return resp
 
 
-@app.route('/order/<int:id>/events', methods = ['GET', 'PUT', 'DELETE'])
-def event2(id):
+@app.route('/order/<int:id>/events', methods = ['GET'])
+def event3(id):
 
     jsondoc = ''
 
@@ -245,6 +245,9 @@ def event2(id):
 
         else: 
             status_code = 404 
+    
+    else:
+        status_code = 400
 
     # ------------------------------------------------------
     # Kirimkan JSON yang sudah dibuat ke staff
