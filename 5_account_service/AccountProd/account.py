@@ -64,14 +64,14 @@ def register():
                     'role': role,
                     'name': name,
                     'email': email,
-                    'position': position
+                    'position': position,
                 }
                 jsondoc = json.dumps(new_data)
                 route_key = 'staff.new' if role == 'Staff' else 'client.new'
                 publish_message(jsondoc, route_key)
 
                 status_code = 201
-                session['client_id'] = account[0]
+                session['account_id'] = account[0]
                 
             except mysql.connector.Error as err:
                 status_code = 409
@@ -112,8 +112,8 @@ def authenticate():
 
             if account and account[0] == password:
                 status_code = 200
-                session['client_id'] = account[0]
-                jsondoc = json.dumps({'status': 'success'})
+                session['account_id'] = account[0]
+                jsondoc = json.dumps({'status': 'success', 'account_id': account[0]})
             else:
                 status_code = 401
                 jsondoc = json.dumps({'status': 'failed'})
