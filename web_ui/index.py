@@ -188,7 +188,6 @@ def order_input():
         postdata = request.form.lists()
 
         data = {key: value[0] for key, value in postdata}
-        data['client_id'] = session['client_id']
         jsondoc = json.dumps(data)
         print(jsondoc)
 
@@ -294,11 +293,12 @@ def register():
         data = {}
         
         for i in postdata:
-            if(i[0] == "name"):   data["username"] = i[1][0]
-            if(i[0] == "name"):   data["password"] = i[1][0]
-            if(i[0] == "status"): data["role"] = i[1][0]
+            if(i[0] == "username"):   data["username"] = i[1][0]
+            if(i[0] == "password"):   data["password"] = i[1][0]
+            if(i[0] == "role"): data["role"] = i[1][0]
             if(i[0] == "name"): data["name"] = i[1][0]
             if(i[0] == "email"): data["email"] = i[1][0]
+            if(i[0] == "position"): data["position"] = i[1][0]
         jsondoc = json.dumps(data)
         print(jsondoc)
 

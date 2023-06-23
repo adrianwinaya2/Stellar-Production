@@ -71,7 +71,6 @@ def register():
                 publish_message(jsondoc, route_key)
 
                 status_code = 201
-                session['client_id'] = account[0]
                 
             except mysql.connector.Error as err:
                 status_code = 409

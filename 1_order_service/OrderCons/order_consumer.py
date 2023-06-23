@@ -25,34 +25,47 @@ def main():
         route = method.routing_key
         data = json.loads(body)
         event = data['event']
-        id = data['id']
 
-        if route == "client.change":
+        if route == "client.new":
             name = data['name']
             email = data['email']
+            
+            sql = "INSERT INTO Client SET name=%s, email=%s;"
+            dbc.execute(sql, [name, email])
+
+        elif route == "client.change":
+            name = data['name']
+            email = data['email']
+            id = data['id']
             
             sql = "UPDATE Client SET name=%s, email=%s WHERE id=%s;"
             dbc.execute(sql, [name, email, id])
 
-        elif route == "client.remove" and check_db_client(id):
-            sql = "DELETE FROM Client WHERE id = %s"
-            dbc.execute(sql, [id])
+        elif route == "client.remove":
+            id = data['id']
+            if check_db_client(id):
+                sql = "DELETE FROM Client WHERE id = %s"
+                dbc.execute(sql, [id])
         
         elif route == "staff.change":
             name = data['name']
             position = data['position']
+            id = data['id']
 
             sql = "UPDATE Staff SET name=%s, position=%s WHERE id=%s;"
             dbc.execute(sql, [name, position, id])
         
-        elif route == "staff.remove" and check_db_staff(id):
-            sql = "DELETE FROM Staff WHERE id = %s"
-            dbc.execute(sql, [id])
+        elif route == "staff.remove":
+            id = data['id']
+
+            if check_db_staff(id):
+                sql = "DELETE FROM Staff WHERE id = %s"
+                dbc.execute(sql, [id])
 
         db.commit()
 
         # tampilkan pesan bahwa event sudah diproses
-        message = str(event) + ' - ' + str(id)
+        message = str(event)
         logging.warning("Received: %r" % message)
 
         # acknowledge message dari RabbitMQ secara manual yang 

@@ -71,7 +71,7 @@ def main():
         db.commit()
 
         # tampilkan pesan bahwa event sudah diproses
-        message = str(event) + ' - ' + str(id)
+        message = str(event)
         logging.warning("Received: %r" % message)
 
         # acknowledge message dari RabbitMQ secara manual yang 
