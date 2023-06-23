@@ -4,37 +4,17 @@ import urllib.request, requests
 
 app = Flask(__name__)
 
-
-
 #====================================================================================
-# SHOW HOMEPAGE
+# API ROUTE
 #====================================================================================
-@app.route('/')
-def index():
-    display_attrs = {"activemenu":0,"bgcolor":"#fff","bgbreadcolor":"#F0F4F7"}
-    return render_template('index.html', display_attrs=display_attrs)
 
-
-
-#====================================================================================
-# SHOW ALL RESTOs AND MENUs
-#====================================================================================
+# ! ORDERS
 @app.route('/order/', methods=['GET', 'POST'])
 def order():
 
     with urllib.request.urlopen("http://localhost:5500/order") as url:
         data = json.load(url)
-
-    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('order.html', display_attrs=display_attrs, table=data)
-
-@app.route('/order/<path:id>', methods=['GET', 'POST'])
-def order_index(id):
-    data_url = "http://localhost:5500/order/" + str(id)
-    
-    with urllib.request.urlopen(data_url) as url:
-        data = json.load(url)
-        data = [data]
+        print(data)
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('order.html', display_attrs=display_attrs, table=data)
@@ -49,8 +29,20 @@ def event():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('event.html', display_attrs=display_attrs, table=data)
 
+@app.route('/event/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def event2(id):
+    
+    with urllib.request.urlopen(f"http://localhost:5500/event/{id}") as url:
+        data = json.load(url)
+        data = [data]
+        print(data)
 
-@app.route('/client/', methods=['GET', 'POST'])
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('order.html', display_attrs=display_attrs, table=data)
+
+
+# ! CLIENTS
+@app.route('/client/', methods=['GET'])
 def client():
 
     with urllib.request.urlopen("http://localhost:5502/client") as url:
@@ -59,12 +51,44 @@ def client():
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('client.html', display_attrs=display_attrs, table=data)
 
+@app.route('/client/<int:id>', methods=['GET', 'PUT', 'DELEETE'])
+def client2(id):
 
-@app.route('/staff/', methods=['GET', 'POST'])
+    with urllib.request.urlopen(f"http://localhost:5502/client/{id}") as url:
+        data = json.load(url)
+        data = [data]
+        print(data)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('client.html', display_attrs=display_attrs, table=data)
+
+# ! STAFFS
+@app.route('/staff/', methods=['GET'])
 def staff():
 
     with urllib.request.urlopen("http://localhost:5503/staff") as url:
         data = json.load(url)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('staff.html', display_attrs=display_attrs, table=data)
+
+@app.route('/staff/<int:id>', methods=['GET', 'PUT', 'DELEETE'])
+def staff2(id):
+
+    with urllib.request.urlopen(f"http://localhost:5503/staff/{id}") as url:
+        data = json.load(url)
+        data = [data]
+        print(data)
+
+    display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+    return render_template('staff.html', display_attrs=display_attrs, table=data)
+
+@app.route('/staff/<string:position>', methods=['GET', 'PUT', 'DELEETE'])
+def staff3(position):
+
+    with urllib.request.urlopen(f"http://localhost:5503/staff/{position}") as url:
+        data = json.load(url)
+        print(data)
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('staff.html', display_attrs=display_attrs, table=data)
@@ -79,6 +103,18 @@ def staff():
 
 #     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
 #     return render_template('account.html', display_attrs=display_attrs, table=data)
+
+
+
+#====================================================================================
+# WEB UI
+#====================================================================================
+
+# ! HOMEPAGE
+@app.route('/')
+def index():
+    display_attrs = {"activemenu":0,"bgcolor":"#fff","bgbreadcolor":"#F0F4F7"}
+    return render_template('index.html', display_attrs=display_attrs)
 
 
 #====================================================================================

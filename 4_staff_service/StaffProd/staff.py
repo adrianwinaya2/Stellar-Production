@@ -33,9 +33,6 @@ app = Flask(__name__)
 def staff():
     jsondoc = ''
 
-    # if HTTPRequest.method not in app._method_route:
-    #     status_code = 400  # Bad Request
-
     # # ------------------------------------------------------
     # # * HTTP method = GET
     # # ------------------------------------------------------
@@ -71,7 +68,7 @@ def staff():
 def staff2(id):
 
     jsondoc = ''
-    # if not id.isnumeric() or HTTPRequest.method not in app._method_route:
+    
     if not id.isnumeric():
         status_code = 400  # Bad Request
 

@@ -211,6 +211,46 @@ def event2(id):
     return resp
 
 
+@app.route('/order/<int:id>/events', methods = ['GET', 'PUT', 'DELETE'])
+def event2(id):
 
+    jsondoc = ''
 
+    if not str(id).isnumeric():
+        status_code = 400  # Bad Request
 
+    # ------------------------------------------------------
+    # * HTTP method = GET
+    # ------------------------------------------------------
+    elif HTTPRequest.method == 'GET':
+        auth = HTTPRequest.authorization
+        print(auth)
+
+        # ambil data order
+        sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id WHERE o.id=%s"
+        dbc.execute(sql, [id])
+        order = dbc.fetchone()
+
+        # column_names = [desc[0] for desc in dbc.description]
+        # ['id', 'client_id', 'pic_id', 'name', 'category', 'schedule', 'status', 'client_name', 'pic_name']
+
+        if order != None:
+
+            # row_dict = dict(zip(column_names, order))
+            # row_dict['schedule'] = row_dict['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+            order['schedule'] = order['schedule'].strftime('%Y-%m-%d %H:%M:%S')
+
+            status_code = 200
+            jsondoc = json.dumps(order)
+
+        else: 
+            status_code = 404 
+
+    # ------------------------------------------------------
+    # Kirimkan JSON yang sudah dibuat ke staff
+    # ------------------------------------------------------
+    resp = HTTPResponse()
+    if jsondoc !='': resp.response = jsondoc
+    resp.headers['Content-Type'] = 'application/json'
+    resp.status = status_code
+    return resp
