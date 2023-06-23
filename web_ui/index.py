@@ -4,6 +4,15 @@ import urllib.request, requests
 
 app = Flask(__name__)
 
+@app.before_request
+def require_authentication():
+    # Check if the user is not logged in
+    if 'account_id' not in session:
+        # Check if the requested URL requires authentication
+        if not request.path.startswith('/account'):
+            # Redirect to the login page
+            return redirect('/account/login')
+        
 #====================================================================================
 # API ROUTE
 #====================================================================================
@@ -188,6 +197,7 @@ def order_input():
         postdata = request.form.lists()
 
         data = {key: value[0] for key, value in postdata}
+        data['account_id'] = session['account_id']
         jsondoc = json.dumps(data)
         print(jsondoc)
 
@@ -277,6 +287,7 @@ def login():
         # urllib.request.urlopen(url)
 
         if response.status_code == 200:
+            session['account_id'] = response.json()['account_id']
             return redirect("/")
         login_failed = True
 
@@ -307,12 +318,16 @@ def register():
         # urllib.request.urlopen(url)
 
         if response.status_code == 201:
-            return redirect("/")
+            return redirect("/account/login")
         register_failed = response.json()['message']
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
     return render_template('register.html', display_attrs=display_attrs, login_failed=register_failed)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect("/account/login")
 
 if __name__ == "__main__":
     # Mac OS kadang nabrak port 5000 maka pakai port 8000

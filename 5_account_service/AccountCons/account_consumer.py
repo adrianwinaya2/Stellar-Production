@@ -45,8 +45,10 @@ def main():
     queue_name = 'account_queue'
     channel.exchange_declare(exchange='EOEX', exchange_type='topic')
     channel.queue_declare(queue=queue_name, exclusive=True)
-    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='*.change')
-    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='*.remove')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='client.change')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='staff.change')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='client.remove')
+    channel.queue_bind(exchange='EOEX', queue=queue_name, routing_key='staff.remove')
 
     # Ambil message dari RabbitMQ (bila ada)
     channel.basic_qos(prefetch_count=1)
