@@ -117,9 +117,7 @@ def index():
     return render_template('index.html', display_attrs=display_attrs)
 
 
-#====================================================================================
-# EDIT ORDER
-#====================================================================================
+# ! ORDER
 @app.route('/order/edit/<path:id>', methods=['GET', 'POST'])
 def order_edit(id):
 
@@ -135,6 +133,49 @@ def order_edit(id):
         jsondoc = json.dumps(data)
         print(jsondoc)
 
+        headers = {'Content-Type': 'application/json'}
+        requests.put(f"http://localhost:5500/order/{id}", data=jsondoc, headers=headers)
+        urllib.request.urlopen(url)
+
+        return redirect("/order/")
+
+    # -------------------------------------------------------
+    # kalau tidak ada data POST dari perubahan data di form, 
+    # tampilkan form berisi data yang siap diubah
+    else:
+
+        with urllib.request.urlopen(f"http://localhost:5500/order/{id}") as url:
+            order_data = json.load(url)
+
+            formdata = {
+                "id": str(id),
+                "pic": order_data["pic_name"],
+                "name": order_data["name"],
+                "schedule": order_data["schedule"],
+                "status": order_data["status"]
+            }
+        
+        with urllib.request.urlopen("http://localhost:5503/staff") as url:
+            staff_data = json.load(url)
+
+        display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+        return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
+
+@app.route('/order/new', methods=['GET', 'POST'])
+def order_input():
+
+    # -------------------------------------------------------
+    # kalau ada data POST maka kirim data json melalui REST ke KantinSvc
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {}
+        data["id"] = str(id)
+        for i in postdata:
+            if(i[0] == "name"):   data["name"] = i[1][0]
+            if(i[0] == "status"): data["status"] = i[1][0]
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
         url     = "http://localhost:5500/order/" + str(id)
         headers = {'Content-Type': 'application/json'}
         requests.put(url, data=jsondoc, headers=headers)
@@ -151,14 +192,13 @@ def order_edit(id):
             data = json.load(url)
             formdata={}
             formdata["id"] = str(id)
-            formdata["pic"] = data["pic_name"]
             formdata["name"] = data["name"]
-            formdata["schedule"] = data["schedule"]
             formdata["status"] = data["status"]
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
         return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata)
 
+# ! EVENT
 @app.route('/event/edit/<path:id>', methods=['GET', 'POST'])
 def event_edit(id):
 
@@ -174,9 +214,8 @@ def event_edit(id):
         jsondoc = json.dumps(data)
         print(jsondoc)
 
-        url     = "http://localhost:5501/event/" + str(id)
         headers = {'Content-Type': 'application/json'}
-        requests.put(url, data=jsondoc, headers=headers)
+        requests.put(f"http://localhost:5501/event/{id}", data=jsondoc, headers=headers)
         urllib.request.urlopen(url)
 
         return redirect("/event/")
@@ -185,56 +224,25 @@ def event_edit(id):
     # kalau tidak ada data POST dari perubahan data di form, 
     # tampilkan form berisi data yang siap diubah
     else:
-        data_url = "http://localhost:5501/event/" + str(id)
-        with urllib.request.urlopen(data_url) as url:
-            data = json.load(url)
-            formdata={}
-            formdata["id"] = str(id)
-            formdata["order_name"] = data["order_name"]
-            formdata["name"] = data["name"]
-            formdata["pic_id"] = data["pic_id"]
-            formdata["time_start"] = data["time_start"]
-            formdata["time_end"] = data["time_end"]
+        
+        with urllib.request.urlopen(f"http://localhost:5501/event/{id}") as url:
+            event_data = json.load(url)
+
+            formdata = {
+                "id": str(id),
+                "order_name": event_data["order_name"],
+                "name": event_data["name"],
+                "pic_name": event_data["pic_name"],
+                "time_start": event_data["time_start"],
+                "time_end": event_data["time_end"]
+            }
+        
+        with urllib.request.urlopen("http://localhost:5503/staff") as url:
+            staff_data = json.load(url)
+
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-        return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata)
-
-@app.route('/order/new', methods=['GET', 'POST'])
-def order_input(id):
-
-    # -------------------------------------------------------
-    # kalau ada data POST maka kirim data json melalui REST ke KantinSvc
-    if (request.method == "POST"):
-        postdata = request.form.lists()
-        data = {}
-        data["id"] = str(id)
-        for i in postdata:
-            if(i[0] == "name"):   data["name"] = i[1][0]
-            if(i[0] == "status"): data["status"] = i[1][0]
-        jsondoc = json.dumps(data)
-        print(jsondoc)
-
-        url     = "http://localhost:5500/order/" + str(id)
-        headers = {'Content-Type': 'application/json'}
-        requests.put(url, data=jsondoc, headers=headers)
-        urllib.request.urlopen(url)
-
-        return redirect("/order/")
-
-    # -------------------------------------------------------
-    # kalau tidak ada data POST dari perubahan data di form, 
-    # tampilkan form berisi data yang siap diubah
-    else:
-        data_url = "http://localhost:5500/order/" + str(id)
-        with urllib.request.urlopen(data_url) as url:
-            data = json.load(url)
-            formdata={}
-            formdata["id"] = str(id)
-            formdata["name"] = data["name"]
-            formdata["status"] = data["status"]
-
-        display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-        return render_template('order_edit.html', display_attrs=display_attrs, formdata=formdata)
+        return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
 
 
 if __name__ == "__main__":
