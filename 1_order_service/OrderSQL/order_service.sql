@@ -8,8 +8,8 @@ USE `stellar_order`;
 -- ! CLIENT TABLE
 CREATE TABLE `Client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `name` varchar(200),
+  `email` varchar(50),
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -22,8 +22,8 @@ INSERT INTO `Client` (`name`, `email`) VALUES
 -- ! STAFF TABLE
 CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `position` ENUM('Leader', 'Coordinator', 'Member') NOT NULL DEFAULT 'Member',
+  `name` varchar(200),
+  `position` ENUM('Leader', 'Coordinator', 'Member') DEFAULT 'Member',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

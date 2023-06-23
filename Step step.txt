@@ -1,0 +1,28 @@
+# BUAT IMAGES
+docker build -t order_pfpm ./1_order_service/OrderProd
+docker build -t order_ppm ./1_order_service/OrderCons
+
+docker build -t event_pfpm ./2_event_service/EventProd
+docker build -t event_ppm ./2_event_service/EventCons
+
+docker build -t client_pfpm ./3_client_service/ClientProd
+docker build -t client_ppm ./3_client_service/ClientCons
+
+docker build -t staff_pfpm ./4_staff_service/StaffProd
+docker build -t staff_ppm ./4_staff_service/StaffCons
+
+docker build -t account_pfpm ./5_account_service/AccountProd
+docker build -t account_ppm ./5_account_service/AccountCons
+
+# DOCKER COMPOSE
+docker-compose -f ./1_order_service/docker-compose.yml up -d
+docker-compose -f ./2_event_service/docker-compose.yml up -d
+docker-compose -f ./3_client_service/docker-compose.yml up -d
+docker-compose -f ./4_staff_service/docker-compose.yml up -d
+docker-compose -f ./5_account_service/docker-compose.yml up -d
+
+docker-compose -f ./1_order_service/docker-compose.yml down
+docker-compose -f ./2_event_service/docker-compose.yml down
+docker-compose -f ./3_client_service/docker-compose.yml down
+docker-compose -f ./4_staff_service/docker-compose.yml down
+docker-compose -f ./5_account_service/docker-compose.yml down

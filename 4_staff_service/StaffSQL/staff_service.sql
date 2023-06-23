@@ -9,9 +9,9 @@ USE `stellar_staff`;
 CREATE TABLE `Staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `position` ENUM('Leader', 'Coordinator', 'Member') NOT NULL,
+  `name` varchar(200),
+  `email` varchar(50),
+  `position` ENUM('Leader', 'Coordinator', 'Member'),
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

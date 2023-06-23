@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response as HTTPResponse, request as HTTPRequest
+from flask import Flask, render_template, Response as HTTPResponse, request as HTTPRequest, session
 import mysql.connector, json, pika, logging
 from account_producer import *
 
@@ -24,8 +24,9 @@ app = Flask(__name__)
 #  - POST : login account
 
 
-@app.route('/create_account/<string:role>', methods = ['POST'])
-def account(role):
+@app.route('/register/', methods = ['POST'])
+def register():
+    
     jsondoc = ''
 
     # ------------------------------------------------------
@@ -33,33 +34,47 @@ def account(role):
     # ------------------------------------------------------
     if HTTPRequest.method == 'POST':
         data = json.loads(HTTPRequest.data)
-        event = data['event']
+        # event = data['event']
         name = data['name']
         username = data['username']
         password = data['password']
+        role = data['role']
         email = data['email']
+        position = data['position']
 
-        try:
-            # simpan nama kantin, dan gedung ke database
-            sql = "INSERT INTO Account (username, password, role) VALUES (%s, %s, %s);"
-            dbc.execute(sql, [username, password, role] )
-            db.commit()
+        # check username availability
+        sql = "SELECT id FROM Account WHERE username=%s;"
+        dbc.execute(sql, [username])
+        account = dbc.fetchone()
 
-            # dapatkan ID dari data kantin yang baru dimasukkan
-            new_data = {
-                'name': name,
-                'username': username,
-                'email': email
-            }
-            jsondoc = json.dumps(new_data)
-            publish_message(jsondoc, 'account.new')
-
-            status_code = 201
-            messagelog = str(event) + ': ' + str(name) + ' | ' +  str(username) + ' | ' + str(name) + ' | ' + str(email)
-            logging.warning("Received: %r" % messagelog)
-            
-        except mysql.connector.Error as err:
+        if account:
             status_code = 409
+            jsondoc = json.dumps({'status': 'failed', 'message': 'Username already exist'})
+        else:
+            try:
+                # simpan nama kantin, dan gedung ke database
+                sql = "INSERT INTO Account (username, password, role) VALUES (%s, %s, %s);"
+                dbc.execute(sql, [username, password, role] )
+                db.commit()
+
+                # dapatkan ID dari data kantin yang baru dimasukkan
+                new_data = {
+                    'event': 'new account',
+                    'username': username,
+                    'role': role,
+                    'name': name,
+                    'email': email,
+                    'position': position
+                }
+                jsondoc = json.dumps(new_data)
+                route_key = 'staff.new' if role == 'Staff' else 'client.new'
+                publish_message(jsondoc, route_key)
+
+                status_code = 201
+                session['client_id'] = account[0]
+                
+            except mysql.connector.Error as err:
+                status_code = 409
 
     else:
         status_code = 400  # Bad Request
@@ -75,8 +90,8 @@ def account(role):
     return resp
 
 
-@app.route('/authenticate/<string:role>', methods = ['POST'])
-def authenticate(id):
+@app.route('/authenticate', methods = ['POST'])
+def authenticate():
     jsondoc = ''
 
     # ------------------------------------------------------
@@ -84,18 +99,20 @@ def authenticate(id):
     # ------------------------------------------------------
     if HTTPRequest.method == 'POST':
         data = json.loads(HTTPRequest.data)
-        event = data['event']
+        # event = data['event']
+        # role = data['role']
         username = data['username']
         password = data['password']
 
         try:
             # simpan nama kantin, dan gedung ke database
-            sql = "SELECT password FROM Account WHERE username=%s;"
+            sql = "SELECT id, password FROM Account WHERE username=%s;"
             dbc.execute(sql, [username] )
             account = dbc.fetchone()
 
             if account and account[0] == password:
                 status_code = 200
+                session['client_id'] = account[0]
                 jsondoc = json.dumps({'status': 'success'})
             else:
                 status_code = 401
