@@ -198,7 +198,7 @@ def order_input():
         postdata = request.form.lists()
 
         data = {key: value[0] for key, value in postdata}
-        data['account_id'] = session['account_id']
+        # data['account_id'] = session['account_id']
         jsondoc = json.dumps(data)
         print(jsondoc)
 
@@ -218,7 +218,7 @@ def order_input():
         client_data = json.load(url)
 
     display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('order_new.html', display_attrs=display_attrs, staff_data=staff_data)
+    return render_template('order_new.html', display_attrs=display_attrs, staff_data=staff_data, client_data=client_data)
 
 # ! EVENT
 @app.route('/event/edit/<path:id>', methods=['GET', 'POST'])

@@ -21,6 +21,18 @@
         <form method="post">
         <div class="form-layout form-layout-4 mg-t-20" style="background-color:#fff">
             
+            <!-- CLIENT ID -->
+            <div class="row mg-t-10">
+                <label class="col-sm-3 form-control-label" for="chrtext">Client</label>
+                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                    <select id="client_id" name="client_id" class="form-control">
+                        {% for client in client_data %}
+                            <option value="{{ client.id }}">{{ client.id }} - {{ client.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div><!-- row -->
+
             <!-- PIC ID -->
             <div class="row mg-t-10">
                 <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response as HTTPResponse, request as HTTPRequest, session
+from flask import Flask, render_template, Response as HTTPResponse, request as HTTPRequest
 import mysql.connector, json, pika, logging
 from account_producer import *
 
@@ -7,6 +7,7 @@ dbc = db.cursor(dictionary=True)
 
 
 app = Flask(__name__)
+app.secret_key = 'stellar_production_secret_key'
 
 # Note, HTTP response codes are
 #  200 = OK the request has succeeded.
@@ -71,7 +72,6 @@ def register():
                 publish_message(jsondoc, route_key)
 
                 status_code = 201
-                session['account_id'] = account[0]
                 
             except mysql.connector.Error as err:
                 status_code = 409
@@ -112,7 +112,6 @@ def authenticate():
 
             if account and account["password"] == password:
                 status_code = 200
-                session['account_id'] = account["id"]
                 jsondoc = json.dumps({'status': 'success', 'account_id': account["id"]})
             else:
                 status_code = 401

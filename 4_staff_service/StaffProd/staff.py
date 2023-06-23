@@ -69,7 +69,7 @@ def staff2(id):
 
     jsondoc = ''
     
-    if not id.isnumeric():
+    if not str(id).isnumeric():
         status_code = 400  # Bad Request
 
     # ------------------------------------------------------

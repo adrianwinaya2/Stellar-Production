@@ -20,6 +20,7 @@ INSERT INTO `Account` (`username`, `password`, `role`) VALUES
 ('winaya456', 'winaya456', 'Staff'),
 ('jefry123', 'jefry123', 'Staff'),
 ('gunawan456', 'gunawan456', 'Staff'),
+
 ('budi123', 'budi123', 'Client'),
 ('wawan456', 'wawan456', 'Client'),
 ('agus789', 'agus789', 'Client');
