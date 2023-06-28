@@ -307,6 +307,7 @@ def staff_edit(id):
     if (request.method == "POST"):
         postdata = request.form.lists()
         data = {key: value[0] for key, value in postdata}
+        data['account_id'] = session['account_id']
         jsondoc = json.dumps(data)
         print(jsondoc)
 

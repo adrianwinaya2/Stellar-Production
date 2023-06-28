@@ -15,11 +15,12 @@ def main():
         event = data['event']
         id = data['id']
         username = data['username']
+        account_id = data['account_id']
 
         # Tambah jumlah order sebanyak 1 untuk id kantin tertentu
         if route == '*.change':
-            sql = "UPDATE Account SET username=%s WHERE username=%s;"
-            dbc.execute(sql, [username, username] )
+            sql = "UPDATE Account SET username=%s WHERE id=%s;"
+            dbc.execute(sql, [username, account_id] )
         elif route == '*.remove':
             sql = "DELETE FROM Account WHERE username=%s;"
             dbc.execute(sql, [username] )
