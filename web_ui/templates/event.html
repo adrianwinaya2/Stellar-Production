@@ -22,27 +22,42 @@
     <div class="br-section-wrapper mg-t-20 pd-30">
         <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
-            <thead><tr>
-                <th class="wd-8p">Order</th>
-                <th class="wd-15p">Name</th>
-                <th class="wd-8p">PIC</th>
-                <th class="wd-15p">Start</th>
-                <th class="wd-15p">End</th>
-                <th class="wd-8p">Action</th>
-            </tr></thead>
-            <tbody>
-                {% for row in table %}
-                <tr><td>{{row.order_name}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.pic_name}}</td>
-                    <td>{{row.time_start}}</td>
-                    <td>{{row.time_end}}</td>
-                    <td><a href="/event/edit/{{row.id}}">Edit</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/event/new" class="create-button">Create New</a>
+                <thead><tr>
+                    <th class="wd-8p">Order</th>
+                    <th class="wd-15p">Name</th>
+                    <th class="wd-8p">PIC</th>
+                    <th class="wd-15p">Start</th>
+                    <th class="wd-15p">End</th>
+                    <th class="wd-8p">Action</th>
+                </tr></thead>
+                <tbody>
+                    {% for row in table %}
+                    <tr><td>{{row.order_name}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.pic_name}}</td>
+                        <td>{{row.time_start}}</td>
+                        <td>{{row.time_end}}</td>
+                        <td><a href="/event/edit/{{row.id}}">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <a href="/event/new" class="create-button mr-2">Create New</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        {% for staff in staff_data %}
+                            <option value="{{ staff.id }}" {% if staff.id == formdata.pic_id %}selected{% endif %}>{{ staff.id }} - {{ staff.name }}</option>
+                        {% endfor %}
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
       </div><!-- table-wrapper -->
     </div>
 
