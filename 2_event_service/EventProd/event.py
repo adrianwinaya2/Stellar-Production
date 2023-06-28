@@ -31,6 +31,7 @@ app = Flask(__name__)
 def event():
 
     jsondoc = ''
+    orders_doc = ''
 
     # # ------------------------------------------------------
     # # * HTTP method = GET (GET ALL ORDERS)
@@ -43,6 +44,10 @@ def event():
         sql = "SELECT e.*, o.name AS order_name, s.name AS pic_name FROM Event as e INNER JOIN `Order` as o ON e.order_id = o.id INNER JOIN Staff as s ON e.pic_id = s.id"
         dbc.execute(sql)
         events = dbc.fetchall()
+        
+        sql = "SELECT * FROM `Order`;"
+        dbc.execute(sql)
+        orders = dbc.fetchall()
 
         # column_names = [desc[0] for desc in dbc.description]
 
@@ -58,7 +63,7 @@ def event():
 
             status_code = 200
             jsondoc = json.dumps(events)
-
+            orders_doc = json.dumps(orders)
         else: 
             status_code = 404 
             
@@ -96,7 +101,7 @@ def event():
     # Kirimkan JSON yang sudah dibuat ke staff
     # ------------------------------------------------------
     resp = HTTPResponse()
-    if jsondoc !='': resp.response = jsondoc
+    if jsondoc !='': resp.response = [jsondoc, orders_doc]
     resp.headers['Content-Type'] = 'application/json'
     resp.status = status_code
     return resp

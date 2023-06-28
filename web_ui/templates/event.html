@@ -48,13 +48,16 @@
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown button
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        {% for staff in staff_data %}
+                    <select id="order_id" name="order_id" class="dropdown-menu">
+                        {% for order in staff_data %}
                             <option value="{{ staff.id }}" {% if staff.id == formdata.pic_id %}selected{% endif %}>{{ staff.id }} - {{ staff.name }}</option>
                         {% endfor %}
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </select>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/events" selected>All</a></li>
+                        {% for staff in staff_data %}
+                            <li><a class="dropdown-item" href="http://127.0.0.1:8000/order/{{ order.id }}/events">{{ order.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

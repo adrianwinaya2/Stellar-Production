@@ -46,9 +46,11 @@ def event():
 
     with urllib.request.urlopen("http://localhost:5501/event") as url:
         data = json.load(url)
+        events = data[0]
+        orders = data[1]
 
     display_attrs = {"activemenu":4,"bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
-    return render_template('event.html', display_attrs=display_attrs, table=data)
+    return render_template('event.html', display_attrs=display_attrs, table=events, orders=orders)
 
 @app.route('/event/<int:id>', methods=['GET'])
 def event2(id):
