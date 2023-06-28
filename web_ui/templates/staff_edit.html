@@ -29,32 +29,36 @@
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">PIC</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Username</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="pic" name="pic" class="form-control" value="{{ formdata.pic }}" placeholder="Enter any text">
+                <input type="text" id="username" name="username" class="form-control" value="{{ formdata.username }}" placeholder="Enter any text" disabled>
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Order Name</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Name</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="name" name="name" class="form-control" value="{{ formdata.name }}" placeholder="Enter any text">
+                <input type="text" id="name" name="name" class="form-control" value="{{ formdata.name }}" placeholder="Enter any text" disabled>
                 </div>
             </div><!-- row -->
 
             <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Schedule</label>
+                <label class="col-sm-3 form-control-label" for="chrtext">Email</label>
                 <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="datetime-local" id="schedule" name="schedule" class="form-control" value="{{ formdata.schedule }}" placeholder="Enter any date">
+                <input type="text" id="email" name="email" class="form-control" value="{{ formdata.email }}" placeholder="Enter any text">
                 </div>
             </div><!-- row -->
 
-            <div class="row mg-t-10">
-                <label class="col-sm-3 form-control-label" for="chrtext">Status</label>
-                <div class="col-sm-9 mg-t-10 mg-sm-t-0">
-                <input type="text" id="status" name="status" class="form-control" value="{{ formdata.status }}" placeholder="Enter any text">
+            <div id="positionContainer" class="position-container" style="display: none;">
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <select id="position" name="position" class="form-control">
+                        <option value="Leader">Leader</option>
+                        <option value="Coordinator">Coordinator</option>
+                        <option value="Member">Member</option>
+                    </select>
                 </div>
-            </div><!-- row -->
+            </div>
 
 
             <div class="form-layout-footer mg-t-30">

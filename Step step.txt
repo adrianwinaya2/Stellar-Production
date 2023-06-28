@@ -1,18 +1,21 @@
+# CREATE EOMQ NETWORK
+docker run --name EOMQ -h rbthost -p 8080:15672 -p 5672:5672 -d -e RABBITMQ_DEFAULT_USER=radmin -e RABBITMQ_DEFAULT_PASS=rpass --network=EONet rabbitmq:3-management
+
 # RUN THIS TO CREATE IMAGE & CONTAINERS
-docker build -t order_pfpm ./1_order_service/OrderProd
-docker build -t order_ppm ./1_order_service/OrderCons
+docker build --no-cache -t order_pfpm ./1_order_service/OrderProd
+docker build --no-cache -t order_ppm ./1_order_service/OrderCons
 
-docker build -t event_pfpm ./2_event_service/EventProd
-docker build -t event_ppm ./2_event_service/EventCons
+docker build --no-cache -t event_pfpm ./2_event_service/EventProd
+docker build --no-cache -t event_ppm ./2_event_service/EventCons
 
-docker build -t client_pfpm ./3_client_service/ClientProd
-docker build -t client_ppm ./3_client_service/ClientCons
+docker build --no-cache -t client_pfpm ./3_client_service/ClientProd
+docker build --no-cache -t client_ppm ./3_client_service/ClientCons
 
-docker build -t staff_pfpm ./4_staff_service/StaffProd
-docker build -t staff_ppm ./4_staff_service/StaffCons
+docker build --no-cache -t staff_pfpm ./4_staff_service/StaffProd
+docker build --no-cache -t staff_ppm ./4_staff_service/StaffCons
 
-docker build -t account_pfpm ./5_account_service/AccountProd
-docker build -t account_ppm ./5_account_service/AccountCons
+docker build --no-cache -t account_pfpm ./5_account_service/AccountProd
+docker build --no-cache -t account_ppm ./5_account_service/AccountCons
 
 docker-compose -f ./1_order_service/docker-compose.yml up -d
 docker-compose -f ./2_event_service/docker-compose.yml up -d

@@ -26,14 +26,14 @@
                 <th class="wd-15p">Name</th>
                 <th class="wd-15p">Username</th>
                 <th class="wd-15p">Email</th>
-                <th class="wd-8p">Action</th>
+                <!-- <th class="wd-8p">Action</th> -->
             </tr></thead>
             <tbody>
                 {% for row in table %}
                 <tr><td>{{row.name}}</td>
                     <td>{{row.username}}</td>
                     <td>{{row.email}}</td>
-                    <td><a href="/client_edit/{{row.id}}">Edit</a></td>
+                    <!-- <td><a href="/client/edit/{{row.id}}">Edit</a></td> -->
                 </tr>
                 {% endfor %}
             </tbody>

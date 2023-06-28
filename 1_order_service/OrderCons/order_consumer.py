@@ -47,6 +47,13 @@ def main():
                 sql = "DELETE FROM Client WHERE id = %s"
                 dbc.execute(sql, [id])
         
+        elif route == "staff.new":
+            name = data['name']
+            position = data['position']
+
+            sql = "INSERT INTO Staff SET name=%s, position=%s;"
+            dbc.execute(sql, [name, position])
+        
         elif route == "staff.change":
             name = data['name']
             position = data['position']

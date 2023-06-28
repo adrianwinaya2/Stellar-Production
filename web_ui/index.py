@@ -225,20 +225,16 @@ def order_input():
 def event_edit(id):
 
     # -------------------------------------------------------
-    # kalau ada data POST maka kirim data json melalui REST ke KantinSvc
+    # kalau ada data POST maka kirim data json melalui REST
     if (request.method == "POST"):
         postdata = request.form.lists()
-        data = {}
-        data["id"] = str(id)
-        for i in postdata:
-            if(i[0] == "name"):   data["name"] = i[1][0]
-            if(i[0] == "status"): data["status"] = i[1][0]
+        data = {key: value[0] for key, value in postdata}
         jsondoc = json.dumps(data)
         print(jsondoc)
 
         headers = {'Content-Type': 'application/json'}
         requests.put(f"http://localhost:5501/event/{id}", data=jsondoc, headers=headers)
-        urllib.request.urlopen(url)
+        # urllib.request.urlopen(url)
 
         return redirect("/event/")
 
@@ -265,6 +261,79 @@ def event_edit(id):
 
         display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
         return render_template('event_edit.html', display_attrs=display_attrs, formdata=formdata, staff_data=staff_data)
+    
+# ! Client
+@app.route('/client/edit/<path:id>', methods=['GET', 'POST'])
+def client_edit(id):
+
+    # -------------------------------------------------------
+    # kalau ada data POST maka kirim data json melalui REST
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {key: value[0] for key, value in postdata}
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
+        headers = {'Content-Type': 'application/json'}
+        requests.put(f"http://localhost:5502/client/{id}", data=jsondoc, headers=headers)
+        # urllib.request.urlopen(url)
+
+        return redirect("/client/")
+
+    # -------------------------------------------------------
+    # kalau tidak ada data POST dari perubahan data di form, 
+    # tampilkan form berisi data yang siap diubah
+    else:
+        
+        with urllib.request.urlopen(f"http://localhost:5502/client/{id}") as url:
+            event_data = json.load(url)
+
+            formdata = {
+                "id": str(id),
+                "username": event_data["username"],
+                "name": event_data["name"],
+                "email": event_data["email"]
+            }
+
+        display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+        return render_template('client_edit.html', display_attrs=display_attrs, formdata=formdata)
+
+# ! Client
+@app.route('/staff/edit/<path:id>', methods=['GET', 'POST'])
+def staff_edit(id):
+
+    # -------------------------------------------------------
+    # kalau ada data POST maka kirim data json melalui REST
+    if (request.method == "POST"):
+        postdata = request.form.lists()
+        data = {key: value[0] for key, value in postdata}
+        jsondoc = json.dumps(data)
+        print(jsondoc)
+
+        headers = {'Content-Type': 'application/json'}
+        requests.put(f"http://localhost:5503/staff/{id}", data=jsondoc, headers=headers)
+        # urllib.request.urlopen(url)
+
+        return redirect("/staff/")
+
+    # -------------------------------------------------------
+    # kalau tidak ada data POST dari perubahan data di form, 
+    # tampilkan form berisi data yang siap diubah
+    else:
+        
+        with urllib.request.urlopen(f"http://localhost:5503/staff/{id}") as url:
+            event_data = json.load(url)
+
+            formdata = {
+                "id": str(id),
+                "username": event_data["username"],
+                "name": event_data["name"],
+                "email": event_data["email"],
+                "position": event_data["position"]
+            }
+
+        display_attrs = {"showpanel":0, "activemenu":4, "activesubmenu":41, "bgcolor":"#E9ECEF","bgbreadcolor":"#dee2e6"}
+        return render_template('staff_edit.html', display_attrs=display_attrs, formdata=formdata)
 
 # ! ACCOUNT
 @app.route('/account/login', methods=['GET', 'POST'])
@@ -327,7 +396,7 @@ def logout():
 
 if __name__ == "__main__":
     # Mac OS kadang nabrak port 5000 maka pakai port 8000
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000, debug=True)
 
     # Untuk Windows
     # app.run()
