@@ -30,7 +30,7 @@ def main():
             name = data['name']
             email = data['email']
             
-            sql = "INSERT INTO Client SET name=%s, email=%s;"
+            sql = "INSERT INTO Client (name, email) VALUES (%s, %s);"
             dbc.execute(sql, [name, email])
 
         elif route == "client.change":
@@ -51,7 +51,7 @@ def main():
             name = data['name']
             position = data['position']
 
-            sql = "INSERT INTO Staff SET name=%s, position=%s;"
+            sql = "INSERT INTO Staff (name, position) VALUES (%s, %s);"
             dbc.execute(sql, [name, position])
         
         elif route == "staff.change":
