@@ -95,7 +95,7 @@ def client2(id):
 
         try:
             # ubah data client di database
-            sql = "UPDATE Client SET username=%s, name=%s, email=%s, WHERE id=%s;"
+            sql = "UPDATE Client SET username=%s, name=%s, email=%s WHERE id=%s;"
             dbc.execute(sql, [username, name, email, id] )
             db.commit()
 

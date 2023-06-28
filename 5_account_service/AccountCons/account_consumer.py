@@ -14,15 +14,15 @@ def main():
         data = json.loads(body)
         event = data['event']
         id = data['id']
-        username = data['kantin_id']
+        username = data['username']
 
         # Tambah jumlah order sebanyak 1 untuk id kantin tertentu
         if route == '*.change':
-            sql = "UPDATE Account SET username=%s WHERE id=%s;"
+            sql = "UPDATE Account SET username=%s WHERE username=%s;"
             dbc.execute(sql, [username, id] )
         elif route == '*.remove':
-            sql = "DELETE FROM Account WHERE id=%s;"
-            dbc.execute(sql, [id] )
+            sql = "DELETE FROM Account WHERE username=%s;"
+            dbc.execute(sql, [username] )
 
         db.commit()
 

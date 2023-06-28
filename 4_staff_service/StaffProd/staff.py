@@ -99,7 +99,7 @@ def staff2(id):
 
         try:
             # ubah nama staff dan gedung di database
-            sql = "UPDATE Staff SET username=%s, name=%s, email=%s, position=%s, WHERE id=%s;"
+            sql = "UPDATE Staff SET username=%s, name=%s, email=%s, position=%s WHERE id=%s;"
             dbc.execute(sql, [username, name, email, position, id] )
             db.commit()
 
