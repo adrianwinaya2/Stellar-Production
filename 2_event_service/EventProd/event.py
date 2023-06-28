@@ -45,7 +45,7 @@ def event():
         dbc.execute(sql)
         events = dbc.fetchall()
         
-        sql = "SELECT * FROM `Order`;"
+        sql = "SELECT id, name FROM `Order`;"
         dbc.execute(sql)
         orders = dbc.fetchall()
 
@@ -62,8 +62,7 @@ def event():
                 row['time_end'] = str(row['time_end'])
 
             status_code = 200
-            jsondoc = json.dumps(events)
-            orders_doc = json.dumps(orders)
+            jsondoc = json.dumps([events, orders])
         else: 
             status_code = 404 
             
@@ -101,7 +100,7 @@ def event():
     # Kirimkan JSON yang sudah dibuat ke staff
     # ------------------------------------------------------
     resp = HTTPResponse()
-    if jsondoc !='': resp.response = [jsondoc, orders_doc]
+    if jsondoc !='': resp.response = jsondoc
     resp.headers['Content-Type'] = 'application/json'
     resp.status = status_code
     return resp

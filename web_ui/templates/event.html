@@ -46,18 +46,16 @@
                 <a href="/event/new" class="create-button mr-2">Create New</a>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown button
+                        Select Order
                     </button>
-                    <select id="order_id" name="order_id" class="dropdown-menu">
-                        {% for order in staff_data %}
-                            <option value="{{ staff.id }}" {% if staff.id == formdata.pic_id %}selected{% endif %}>{{ staff.id }} - {{ staff.name }}</option>
-                        {% endfor %}
-                    </select>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/events" selected>All</a></li>
-                        {% for staff in staff_data %}
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/event" selected>All</a></li>
+                        {% for order in orders %}
                             <li><a class="dropdown-item" href="http://127.0.0.1:8000/order/{{ order.id }}/events">{{ order.name }}</a></li>
                         {% endfor %}
+                        <!-- <li><a class="dropdown-item" href="http://127.0.0.1:8000/order/1/events">Ana & Anu</a></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/order/2/events">Jennifer</a></li>
+                        <li><a class="dropdown-item" href="http://127.0.0.1:8000/order/3/events">David</a></li> -->
                     </ul>
                 </div>
             </div>
