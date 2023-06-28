@@ -27,7 +27,7 @@
                 <th class="wd-15p">Username</th>
                 <th class="wd-15p">Email</th>
                 <th class="wd-15p">Position</th>
-                <!-- <th class="wd-8p">Action</th> -->
+                <th class="wd-8p">Action</th> 
             </tr></thead>
             <tbody>
                 {% for row in table %}
@@ -35,7 +35,9 @@
                     <td>{{row.username}}</td>
                     <td>{{row.email}}</td>
                     <td>{{row.position}}</td>
-                    <!-- <td><a href="/staff/edit/{{row.id}}">Edit</a></td> -->
+                    {% if session.account_id == row.id %}
+                        <td><a href="/staff/edit/{{row.id}}">Edit</a></td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
